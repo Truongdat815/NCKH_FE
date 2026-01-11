@@ -6,13 +6,13 @@ import PageTransition from '../../../components/common/PageTransition'
 const CartPage = () => {
   return (
     <PageTransition>
-      <div className="py-8 space-y-10">
-        <h1 className="text-4xl font-[900] text-gray-900 tracking-tighter uppercase">Giỏ hàng của bạn</h1>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+        <h1 className="text-3xl sm:text-4xl font-[900] text-gray-900 tracking-tight">Giỏ hàng của bạn</h1>
         
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-4">
             {[1, 2].map((i) => (
-              <div key={i} className="bg-white p-6 rounded-[35px] border border-gray-100 flex items-center gap-6 shadow-sm">
+              <div key={i} className="bg-white p-5 rounded-3xl border border-gray-100 flex items-center gap-4 shadow-sm">
                 <img src="https://images.unsplash.com/photo-1628352081506-83c43123ed6d?auto=format&fit=crop&q=80&w=200" className="w-24 h-24 rounded-2xl object-cover" alt="product" />
                 <div className="flex-1">
                   <h3 className="font-bold text-lg text-gray-900">Phân bón NPK Đầu Trâu {i}</h3>
@@ -28,7 +28,7 @@ const CartPage = () => {
             ))}
           </div>
 
-          <div className="bg-white p-8 rounded-[40px] border border-gray-100 shadow-xl h-fit space-y-6">
+          <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-lg h-fit space-y-5">
             <h3 className="text-xl font-black border-b pb-4">Tổng thanh toán</h3>
             <div className="space-y-3">
               <div className="flex justify-between text-gray-500 font-medium"><span>Tạm tính:</span><span>300.000₫</span></div>

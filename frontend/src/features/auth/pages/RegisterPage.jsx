@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { UserIcon, BuildingOfficeIcon, AcademicCapIcon, IdentificationIcon } from '@heroicons/react/24/outline'
 import PageTransition from '../../../components/common/PageTransition'
 
@@ -11,7 +11,20 @@ const roles = [
 ]
 
 const RegisterPage = () => {
+  const navigate = useNavigate()
   const [selectedRole, setSelectedRole] = useState('farmer')
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    // Fake register - redirect trực tiếp theo role (không cần API)
+    const roleRoutes = {
+      farmer: '/dashboard/farmer',
+      enterprise: '/dashboard/enterprise',
+      engineer: '/dashboard/engineer',
+      consumer: '/dashboard/consumer'
+    }
+    navigate(roleRoutes[selectedRole] || '/dashboard/farmer')
+  }
 
   return (
     <PageTransition>
@@ -43,7 +56,7 @@ const RegisterPage = () => {
             ))}
           </div>
 
-          <form className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <form onSubmit={handleSubmit} className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
             <input type="text" required className="appearance-none rounded-2xl block w-full px-5 py-4 border border-gray-100 placeholder-gray-400 text-gray-900 focus:ring-2 focus:ring-emerald-500 bg-gray-50/50 font-medium outline-none" placeholder="Họ và tên" />
             <input type="text" required className="appearance-none rounded-2xl block w-full px-5 py-4 border border-gray-100 placeholder-gray-400 text-gray-900 focus:ring-2 focus:ring-emerald-500 bg-gray-50/50 font-medium outline-none" placeholder="Số điện thoại" />
             <input type="email" required className="md:col-span-2 appearance-none rounded-2xl block w-full px-5 py-4 border border-gray-100 placeholder-gray-400 text-gray-900 focus:ring-2 focus:ring-emerald-500 bg-gray-50/50 font-medium outline-none" placeholder="Địa chỉ Email" />

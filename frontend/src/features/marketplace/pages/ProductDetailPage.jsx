@@ -23,11 +23,11 @@ const ProductDetailPage = () => {
 
   return (
     <PageTransition>
-      <div className="py-8 space-y-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         {/* Product Section */}
-        <div className="bg-white rounded-[40px] shadow-sm border border-gray-100 overflow-hidden grid grid-cols-1 lg:grid-cols-2">
-          <div className="p-8 bg-gray-50 flex items-center justify-center">
-            <div className="relative group overflow-hidden rounded-[32px] shadow-2xl bg-white aspect-square w-full max-w-md">
+        <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden grid grid-cols-1 lg:grid-cols-2">
+          <div className="p-6 bg-gray-50 flex items-center justify-center">
+            <div className="relative group overflow-hidden rounded-3xl shadow-xl bg-white aspect-square w-full max-w-md">
               <img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Gạo ST25" />
               <div className="absolute top-6 left-6">
                 <Badge color="success">VietGAP Standard</Badge>
@@ -35,7 +35,7 @@ const ProductDetailPage = () => {
             </div>
           </div>
 
-          <div className="p-12 flex flex-col justify-center space-y-8">
+          <div className="p-6 sm:p-8 flex flex-col justify-center space-y-6">
             <div>
               <div className="flex items-center gap-2 text-emerald-600 font-black text-xs uppercase tracking-[0.2em] mb-4">
                 <ShieldCheckIcon className="w-5 h-5" /> Sản phẩm đã được bảo chứng

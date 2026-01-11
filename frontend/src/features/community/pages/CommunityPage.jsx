@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { 
   ChatBubbleLeftRightIcon, 
   HandThumbUpIcon, 
@@ -23,30 +24,31 @@ const CommunityPage = () => {
   ]
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      {/* Left Content */}
-      <div className="lg:col-span-2 space-y-6">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        {/* Left Content */}
+        <div className="lg:col-span-8 space-y-6">
         {/* Create Post */}
         <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
           <div className="flex gap-4 mb-4">
-            <img src="https://i.pravatar.cc/150?u=me" alt="me" className="w-12 h-12 rounded-full border-2 border-primary-100" />
+            <img src="https://i.pravatar.cc/150?u=me" alt="me" className="w-12 h-12 rounded-full border-2 border-emerald-100" />
             <textarea 
               placeholder="Bác đang gặp vấn đề gì với cây trồng? Đăng bài để nhận tư vấn..."
-              className="w-full bg-gray-50 rounded-xl p-4 border-none focus:ring-2 focus:ring-primary-500 resize-none h-24 text-sm"
+              className="w-full bg-gray-50 rounded-xl p-4 border-none focus:ring-2 focus:ring-emerald-500 resize-none h-24 text-sm"
             ></textarea>
           </div>
           <div className="flex justify-between items-center pt-4 border-t border-gray-50">
             <div className="flex gap-4">
-              <button className="flex items-center gap-2 text-gray-500 hover:text-primary-600 transition-colors">
+              <button className="flex items-center gap-2 text-gray-500 hover:text-emerald-600 transition-colors">
                 <CameraIcon className="w-6 h-6" />
                 <span className="text-sm font-medium">Ảnh/Video</span>
               </button>
-              <button className="flex items-center gap-2 text-gray-500 hover:text-primary-600 transition-colors">
+              <button className="flex items-center gap-2 text-gray-500 hover:text-emerald-600 transition-colors">
                 <span className="text-xl">🤖</span>
                 <span className="text-sm font-medium">AI Chẩn đoán</span>
               </button>
             </div>
-            <button className="px-8 py-2 bg-primary-600 text-white rounded-xl font-bold hover:bg-primary-700 transition-all shadow-lg shadow-primary-200">
+            <button className="px-8 py-2 bg-emerald-600 text-white rounded-xl font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-200">
               Đăng bài
             </button>
           </div>
@@ -70,11 +72,11 @@ const CommunityPage = () => {
                 </div>
               )}
               <div className="flex items-center gap-6 pt-4 border-t border-gray-50">
-                <button className="flex items-center gap-2 text-gray-500 hover:text-primary-600">
+                <button className="flex items-center gap-2 text-gray-500 hover:text-emerald-600">
                   <HandThumbUpIcon className="w-6 h-6" />
                   <span className="text-sm font-bold">{post.likes}</span>
                 </button>
-                <button className="flex items-center gap-2 text-gray-500 hover:text-primary-600">
+                <button className="flex items-center gap-2 text-gray-500 hover:text-emerald-600">
                   <ChatBubbleLeftRightIcon className="w-6 h-6" />
                   <span className="text-sm font-bold">{post.comments.length}</span>
                 </button>
@@ -93,7 +95,7 @@ const CommunityPage = () => {
                     </div>
                     <p className="text-sm text-gray-600">{comment.content}</p>
                     <div className="mt-2">
-                      <button className="text-xs font-bold text-primary-600 bg-primary-50 px-2 py-1 rounded-md hover:bg-primary-100 transition-colors">
+                      <button className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md hover:bg-emerald-100 transition-colors">
                         Tặng thưởng 500đ
                       </button>
                     </div>
@@ -105,8 +107,8 @@ const CommunityPage = () => {
         ))}
       </div>
 
-      {/* Right Sidebar */}
-      <div className="space-y-6">
+        {/* Right Sidebar */}
+        <div className="lg:col-span-4 space-y-6">
         <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
           <h3 className="text-lg font-black mb-4">Kỹ sư tiêu biểu</h3>
           <div className="space-y-4">
@@ -119,19 +121,23 @@ const CommunityPage = () => {
                     <p className="text-xs text-gray-400">Đã tư vấn {i*50}+ ca</p>
                   </div>
                 </div>
-                <button className="text-xs font-bold text-primary-600 hover:underline">Liên hệ</button>
+                <button className="text-xs font-bold text-emerald-600 hover:underline">Liên hệ</button>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-primary-600 to-primary-400 p-6 rounded-3xl text-white shadow-xl">
+        <div className="bg-gradient-to-br from-emerald-600 to-green-500 p-6 rounded-3xl text-white shadow-xl">
           <div className="text-2xl mb-4">🤖</div>
           <h4 className="text-lg font-bold mb-2">AI Chẩn đoán</h4>
           <p className="text-sm opacity-90 mb-4">Chụp ảnh lá cây để nhận kết quả phân tích tức thì từ AI của chúng tôi.</p>
-          <button className="w-full py-2 bg-white text-primary-600 rounded-xl font-bold hover:bg-gray-100 transition-colors">
+          <Link 
+            to="/ai-chat"
+            className="block w-full py-3 bg-white text-emerald-600 rounded-xl font-bold hover:bg-gray-100 transition-colors text-center shadow-lg"
+          >
             Trải nghiệm ngay
-          </button>
+          </Link>
+        </div>
         </div>
       </div>
     </div>

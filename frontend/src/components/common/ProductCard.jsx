@@ -24,9 +24,9 @@ const ProductCard = ({ product }) => {
         <div className="flex justify-between items-center mb-3">
           <div className="flex items-center gap-1 bg-yellow-50 px-3 py-1 rounded-full">
             <StarIcon className="w-3 h-3 text-yellow-500" />
-            <span className="text-xs font-black text-yellow-700">4.9</span>
+            <span className="text-xs font-black text-yellow-700">{product.rating || 4.9}</span>
           </div>
-          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">1.2k Đã bán</span>
+          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">Đã bán</span>
         </div>
         
         <h3 className="text-lg font-black text-gray-900 mb-2 line-clamp-1 group-hover:text-emerald-600 transition-colors">

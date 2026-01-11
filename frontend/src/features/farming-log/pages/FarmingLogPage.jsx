@@ -21,19 +21,19 @@ const FarmingLogPage = () => {
 
   return (
     <PageTransition>
-      <div className="py-12 space-y-12">
-        <div className="flex flex-col md:flex-row justify-between items-end gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <div className="space-y-2">
-            <span className="text-emerald-600 font-black uppercase tracking-[0.3em] text-[10px] bg-emerald-50 px-3 py-1 rounded-full">Digital Farming 4.0</span>
-            <h1 className="text-5xl font-[900] text-gray-900 tracking-tighter font-lexend leading-none">{currentSeason.name}</h1>
+            <span className="text-emerald-600 font-bold uppercase tracking-wider text-xs bg-emerald-50 px-3 py-1.5 rounded-full">Digital Farming 4.0</span>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-[900] text-gray-900 tracking-tight leading-tight">{currentSeason.name}</h1>
           </div>
-          <button className="px-10 py-5 bg-emerald-600 text-white font-black rounded-3xl shadow-2xl shadow-emerald-200 hover:scale-105 transition-all active:scale-95 uppercase tracking-widest text-xs font-lexend">
+          <button className="px-6 py-3 bg-emerald-600 text-white font-bold rounded-2xl shadow-xl shadow-emerald-200/50 hover:bg-emerald-700 hover:shadow-2xl transition-all duration-200 active:scale-[0.98] uppercase tracking-wider text-sm self-start sm:self-auto">
             + Tạo Nhật Ký Mới
           </button>
         </div>
 
         {/* Overview Info Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="bg-white p-10 rounded-[50px] border border-gray-100 shadow-sm space-y-6">
             <h3 className="text-sm font-black text-gray-400 uppercase tracking-widest flex items-center gap-2">
               <Square3Stack3DIcon className="w-4 h-4 text-emerald-500" /> Chi tiết vụ mùa

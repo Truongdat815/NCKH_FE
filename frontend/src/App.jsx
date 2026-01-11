@@ -7,11 +7,9 @@ function App() {
       {/* Navbar luôn nằm trên cùng */}
       <Navbar />
       
-      {/* main này sẽ có padding-top là 96px để né cái Navbar 80px */}
-      <main className="pt-24 flex-grow w-full">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Outlet />
-        </div>
+      {/* Main content - padding top để tránh navbar */}
+      <main className="pt-20 flex-grow w-full">
+        <Outlet />
       </main>
       
       <footer className="bg-white border-t border-gray-100 py-12 mt-20">

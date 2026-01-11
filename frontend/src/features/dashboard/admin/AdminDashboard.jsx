@@ -8,6 +8,7 @@ import {
   MapIcon
 } from '@heroicons/react/24/solid'
 import PageTransition from '../../../components/common/PageTransition'
+import Badge from '../../../components/common/Badge'
 
 const AdminDashboard = () => {
   const cards = [
@@ -19,11 +20,11 @@ const AdminDashboard = () => {
 
   return (
     <PageTransition>
-      <div className="py-8 space-y-10">
-        <header className="flex justify-between items-end">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        <header className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <div>
-            <h1 className="text-5xl font-[900] text-gray-900 tracking-tighter">Hệ Thống Quản Trị</h1>
-            <p className="text-gray-400 font-black uppercase tracking-[0.2em] text-[10px] mt-2">Dữ liệu thời gian thực AgriSmart 4.0</p>
+            <h1 className="text-4xl sm:text-5xl font-[900] text-gray-900 tracking-tight">Hệ Thống Quản Trị</h1>
+            <p className="text-gray-400 font-bold uppercase tracking-wider text-xs mt-2">Dữ liệu thời gian thực AgriSmart 4.0</p>
           </div>
           <div className="flex gap-3">
             <button className="px-6 py-3 bg-white border border-gray-200 rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-sm hover:bg-gray-50 transition-all">Xuất báo cáo</button>
@@ -32,31 +33,31 @@ const AdminDashboard = () => {
         </header>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {cards.map(c => (
-            <div key={c.name} className="bg-white p-8 rounded-[40px] border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 group">
-              <div className={`w-14 h-14 ${c.color} rounded-2xl flex items-center justify-center text-white mb-6 shadow-lg shadow-inherit/30 group-hover:rotate-6 transition-transform`}>
-                <c.icon className="w-7 h-7" />
+            <div key={c.name} className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 group">
+              <div className={`w-12 h-12 ${c.color} rounded-2xl flex items-center justify-center text-white mb-4 shadow-md group-hover:scale-110 transition-transform duration-300`}>
+                <c.icon className="w-6 h-6" />
               </div>
-              <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">{c.name}</p>
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">{c.name}</p>
               <div className="flex items-end justify-between">
-                <h3 className="text-2xl font-black text-gray-900 tracking-tighter">{c.value}</h3>
-                <span className="text-[10px] font-black text-emerald-600">{c.trend}</span>
+                <h3 className="text-2xl font-[900] text-gray-900 tracking-tight">{c.value}</h3>
+                <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg">{c.trend}</span>
               </div>
             </div>
           ))}
         </div>
 
         {/* Disease Map & Market Chart */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-          <div className="lg:col-span-2 bg-white p-10 rounded-[50px] border border-gray-100 shadow-sm space-y-8">
-            <div className="flex items-center justify-between">
-              <h3 className="text-xl font-[900] text-gray-900 flex items-center gap-3">
-                <MapIcon className="w-6 h-6 text-emerald-600" /> Bản đồ Dịch tễ (AI Satellite)
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 bg-white p-6 rounded-3xl border border-gray-100 shadow-sm space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <h3 className="text-lg font-[900] text-gray-900 flex items-center gap-3">
+                <MapIcon className="w-5 h-5 text-emerald-600" /> Bản đồ Dịch tễ (AI Satellite)
               </h3>
               <Badge color="danger">Cảnh báo: Đạo ôn</Badge>
             </div>
-            <div className="aspect-video bg-gray-900 rounded-[40px] relative overflow-hidden shadow-2xl">
+            <div className="aspect-video bg-gray-900 rounded-3xl relative overflow-hidden shadow-lg">
               <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=1200" className="w-full h-full object-cover opacity-40 grayscale" alt="Map" />
               <div className="absolute inset-0 flex items-center justify-center bg-emerald-900/20 backdrop-blur-[1px]">
                 <div className="text-center space-y-4">
@@ -69,11 +70,11 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          <div className="bg-emerald-900 p-10 rounded-[50px] text-white shadow-3xl space-y-10">
-            <h3 className="text-xl font-[900] flex items-center gap-3 border-b border-white/10 pb-6">
-              <ArrowTrendingUpIcon className="w-6 h-6 text-emerald-400" /> Xu hướng giá
+          <div className="bg-emerald-900 p-6 rounded-3xl text-white shadow-xl space-y-6">
+            <h3 className="text-lg font-[900] flex items-center gap-3 border-b border-white/10 pb-4">
+              <ArrowTrendingUpIcon className="w-5 h-5 text-emerald-400" /> Xu hướng giá
             </h3>
-            <div className="space-y-8">
+            <div className="space-y-5">
               {[
                 { n: 'Lúa ST25', v: '+350đ/kg', c: 'text-emerald-400' },
                 { n: 'Phân NPK', v: '-1,200đ/kg', c: 'text-red-400' },

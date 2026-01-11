@@ -1,18 +1,34 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { LockClosedIcon, EnvelopeIcon } from '@heroicons/react/24/outline'
 import PageTransition from '../../../components/common/PageTransition'
 
 const LoginPage = () => {
+  const navigate = useNavigate()
+  const [role, setRole] = useState('admin') // Default role
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    // Không cần check API, redirect trực tiếp theo role
+    const roleRoutes = {
+      admin: '/dashboard',
+      enterprise: '/dashboard/enterprise',
+      farmer: '/dashboard/farmer',
+      engineer: '/dashboard/engineer',
+      consumer: '/dashboard/consumer'
+    }
+    navigate(roleRoutes[role] || '/dashboard')
+  }
+
   return (
     <PageTransition>
-      <div className="min-h-screen flex items-center justify-center bg-gray-50/50 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-md w-full space-y-10 bg-white p-12 rounded-[40px] shadow-2xl border border-gray-100">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 via-white to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-[40px] shadow-2xl border border-gray-100">
           <div className="text-center">
-            <div className="mx-auto h-16 w-16 bg-emerald-600 rounded-2xl flex items-center justify-center shadow-2xl shadow-emerald-200 mb-6">
+            <div className="mx-auto h-16 w-16 bg-gradient-to-br from-emerald-600 to-green-600 rounded-2xl flex items-center justify-center shadow-2xl shadow-emerald-200 mb-6">
               <span className="text-3xl">🌾</span>
             </div>
-            <h2 className="text-4xl font-[900] text-gray-900 tracking-tighter font-lexend">
+            <h2 className="text-4xl font-[900] text-gray-900 tracking-tighter">
               Chào mừng trở lại!
             </h2>
             <p className="mt-3 text-sm text-gray-400 font-bold uppercase tracking-widest">
@@ -22,7 +38,37 @@ const LoginPage = () => {
               </Link>
             </p>
           </div>
-          <form className="mt-10 space-y-6" action="#" method="POST">
+
+          {/* Role Selection */}
+          <div>
+            <label className="block text-sm font-black text-gray-700 uppercase tracking-widest mb-3">
+              Đăng nhập với vai trò:
+            </label>
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { value: 'admin', label: '👑 Admin', color: 'bg-purple-100 text-purple-700 border-purple-200' },
+                { value: 'enterprise', label: '🏢 Doanh nghiệp', color: 'bg-blue-100 text-blue-700 border-blue-200' },
+                { value: 'farmer', label: '🌾 Nông dân', color: 'bg-emerald-100 text-emerald-700 border-emerald-200' },
+                { value: 'engineer', label: '🔬 Kỹ sư', color: 'bg-orange-100 text-orange-700 border-orange-200' },
+                { value: 'consumer', label: '🛒 Người tiêu dùng', color: 'bg-pink-100 text-pink-700 border-pink-200' },
+              ].map(r => (
+                <button
+                  key={r.value}
+                  type="button"
+                  onClick={() => setRole(r.value)}
+                  className={`px-4 py-3 rounded-xl border-2 font-bold text-sm transition-all ${
+                    role === r.value
+                      ? `${r.color} border-current shadow-md scale-105`
+                      : 'bg-gray-50 text-gray-500 border-gray-200 hover:bg-gray-100'
+                  }`}
+                >
+                  {r.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-4">
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -33,6 +79,7 @@ const LoginPage = () => {
                   name="email"
                   type="email"
                   required
+                  defaultValue="demo@agrismart.com"
                   className="appearance-none rounded-2xl relative block w-full pl-12 px-4 py-4 border border-gray-100 placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all sm:text-sm bg-gray-50/50 font-medium"
                   placeholder="Địa chỉ Email"
                 />
@@ -46,6 +93,7 @@ const LoginPage = () => {
                   name="password"
                   type="password"
                   required
+                  defaultValue="123456"
                   className="appearance-none rounded-2xl relative block w-full pl-12 px-4 py-4 border border-gray-100 placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all sm:text-sm bg-gray-50/50 font-medium"
                   placeholder="Mật khẩu"
                 />
@@ -58,6 +106,7 @@ const LoginPage = () => {
                   id="remember-me"
                   name="remember-me"
                   type="checkbox"
+                  defaultChecked
                   className="h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded-lg"
                 />
                 <label htmlFor="remember-me" className="ml-2 block text-sm font-bold text-gray-500">
@@ -74,9 +123,9 @@ const LoginPage = () => {
 
             <button
               type="submit"
-              className="group relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-black rounded-2xl text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-all shadow-xl shadow-emerald-100 uppercase tracking-widest font-lexend"
+              className="group relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-black rounded-2xl text-white bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-all shadow-xl shadow-emerald-100 uppercase tracking-widest"
             >
-              Đăng nhập ngay
+              Đăng nhập ngay →
             </button>
           </form>
         </div>

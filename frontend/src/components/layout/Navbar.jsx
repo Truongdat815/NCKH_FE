@@ -26,9 +26,9 @@ const Navbar = () => {
   const isActive = (path) => location.pathname === path
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-[1000] bg-white border-b border-gray-200 shadow-md">
+    <header className="fixed top-0 left-0 right-0 z-[1000] bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
+        <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3">
             <div className="w-12 h-12 bg-emerald-600 rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-200">
@@ -41,33 +41,33 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center space-x-2">
+          <nav className="hidden md:flex items-center gap-1">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 to={item.href}
-                className={`flex items-center gap-2 px-4 py-2.5 text-sm font-bold rounded-xl transition-all ${
+                className={`flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-xl transition-all duration-200 whitespace-nowrap ${
                   isActive(item.href)
-                    ? 'text-emerald-600 bg-emerald-50'
-                    : 'text-gray-500 hover:text-emerald-600 hover:bg-gray-50'
+                    ? 'text-emerald-600 bg-emerald-50 shadow-sm'
+                    : 'text-gray-600 hover:text-emerald-600 hover:bg-emerald-50/50'
                 }`}
               >
-                <item.icon className="w-5 h-5 stroke-[2.5px]" />
-                {item.name}
+                <item.icon className="w-4 h-4 stroke-[2.5px]" />
+                <span>{item.name}</span>
               </Link>
             ))}
           </nav>
 
           {/* User Actions */}
-          <div className="hidden md:flex items-center gap-4 border-l border-gray-100 pl-6 ml-2">
+          <div className="hidden md:flex items-center gap-3 border-l border-gray-100 pl-5 ml-3">
             <Link to="/cart" className="relative p-2 text-gray-500 hover:text-emerald-600 transition-colors">
               <ShoppingCartIcon className="w-6 h-6 stroke-[2px]" />
               <span className="absolute top-0 right-0 w-4 h-4 bg-red-500 text-white text-[10px] font-black rounded-full flex items-center justify-center">2</span>
             </Link>
-            <Link to="/login" className="text-sm font-black text-gray-500 hover:text-emerald-600 transition-colors uppercase tracking-widest">
+            <Link to="/login" className="text-sm font-bold text-gray-600 hover:text-emerald-600 transition-colors duration-200 whitespace-nowrap">
               Đăng nhập
             </Link>
-            <Link to="/register" className="px-6 py-3 bg-emerald-600 text-white text-xs font-black rounded-2xl shadow-xl shadow-emerald-100 hover:bg-emerald-700 transition-all hover:-translate-y-0.5 active:scale-95 uppercase tracking-widest">
+            <Link to="/register" className="px-5 py-2.5 bg-emerald-600 text-white text-sm font-bold rounded-xl shadow-lg shadow-emerald-200/50 hover:bg-emerald-700 hover:shadow-xl hover:shadow-emerald-200 transition-all duration-200 active:scale-[0.98] whitespace-nowrap">
               Bắt đầu
             </Link>
           </div>
