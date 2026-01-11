@@ -1,0 +1,359 @@
+// ERD cho hệ thống AgriSmart - Nông nghiệp thông minh
+// Sử dụng trên https://dbdiagram.io
+
+// ============================================
+// QUẢN LÝ NGƯỜI DÙNG
+// ============================================
+
+Table users {
+  id bigint [pk, increment]
+  name varchar(255) [not null, note: 'Họ tên']
+  email varchar(255) [unique, not null, note: 'Email đăng nhập']
+  phone varchar(20) [unique, note: 'Số điện thoại']
+  password_hash varchar(255) [not null, note: 'Mật khẩu đã mã hóa']
+  role varchar(50) [not null, note: 'Vai trò: nông dân, doanh nghiệp, kỹ sư, người mua, admin']
+  avatar_url text [note: 'Link ảnh đại diện']
+  address text [note: 'Địa chỉ']
+  verified boolean [default: false, note: 'Đã xác thực hay chưa']
+  created_at timestamp [default: `now()`, note: 'Ngày tạo']
+  updated_at timestamp [default: `now()`, note: 'Ngày cập nhật']
+  
+  Note: 'Bảng thông tin người dùng'
+}
+
+Table user_profiles {
+  id bigint [pk, increment]
+  user_id bigint [ref: > users.id, unique, note: 'ID người dùng']
+  bio text [note: 'Giới thiệu bản thân']
+  location varchar(255) [note: 'Vị trí']
+  join_date date [note: 'Ngày tham gia']
+  total_orders int [default: 0, note: 'Tổng số đơn hàng']
+  total_products int [default: 0, note: 'Tổng số sản phẩm']
+  rating_avg decimal(3,2) [default: 0, note: 'Điểm đánh giá trung bình']
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+  
+  Note: 'Thông tin chi tiết của người dùng'
+}
+
+Table expert_profiles {
+  id bigint [pk, increment]
+  user_id bigint [ref: > users.id, unique, note: 'ID kỹ sư']
+  category varchar(255) [note: 'Chuyên môn: bệnh cây, phân bón, sâu bệnh, kỹ thuật']
+  solved_count int [default: 0, note: 'Số câu hỏi đã giải đáp']
+  rating decimal(3,2) [default: 0, note: 'Điểm đánh giá']
+  verified boolean [default: false, note: 'Đã xác thực chuyên môn']
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+  
+  Note: 'Thông tin kỹ sư/chuyên gia'
+}
+
+// ============================================
+// CỘNG ĐỒNG
+// ============================================
+
+Table posts {
+  id bigint [pk, increment]
+  user_id bigint [ref: > users.id, not null, note: 'ID người đăng']
+  content text [not null, note: 'Nội dung bài viết']
+  image_url text [note: 'Link ảnh đính kèm']
+  category varchar(100) [note: 'Danh mục: bệnh cây, phân bón, sâu bệnh, kỹ thuật, thị trường, khác']
+  likes_count int [default: 0, note: 'Số lượt thích']
+  comments_count int [default: 0, note: 'Số bình luận']
+  shares_count int [default: 0, note: 'Số lượt chia sẻ']
+  views_count int [default: 0, note: 'Số lượt xem']
+  is_hot boolean [default: false, note: 'Bài viết hot']
+  is_trending boolean [default: false, note: 'Đang thịnh hành']
+  is_expert_post boolean [default: false, note: 'Bài viết của kỹ sư']
+  created_at timestamp [default: `now()`, note: 'Ngày đăng']
+  updated_at timestamp [default: `now()`]
+  
+  Note: 'Bài viết trong cộng đồng'
+}
+
+Table post_tags {
+  id bigint [pk, increment]
+  post_id bigint [ref: > posts.id, not null, note: 'ID bài viết']
+  tag_name varchar(100) [not null, note: 'Tên tag']
+  created_at timestamp [default: `now()`]
+  
+  Note: 'Tag của bài viết'
+}
+
+Table comments {
+  id bigint [pk, increment]
+  post_id bigint [ref: > posts.id, not null, note: 'ID bài viết']
+  user_id bigint [ref: > users.id, not null, note: 'ID người bình luận']
+  content text [not null, note: 'Nội dung bình luận']
+  likes_count int [default: 0, note: 'Số lượt thích']
+  rewarded_amount decimal(10,2) [default: 0, note: 'Tiền thưởng cho bình luận hay']
+  is_expert boolean [default: false, note: 'Bình luận của kỹ sư']
+  created_at timestamp [default: `now()`, note: 'Ngày bình luận']
+  updated_at timestamp [default: `now()`]
+  
+  Note: 'Bình luận trên bài viết'
+}
+
+Table post_likes {
+  id bigint [pk, increment]
+  post_id bigint [ref: > posts.id, not null, note: 'ID bài viết']
+  user_id bigint [ref: > users.id, not null, note: 'ID người thích']
+  created_at timestamp [default: `now()`, note: 'Ngày thích']
+  
+  Note: 'Ai đã thích bài viết nào'
+  indexes {
+    (post_id, user_id) [unique]
+  }
+}
+
+Table comment_likes {
+  id bigint [pk, increment]
+  comment_id bigint [ref: > comments.id, not null, note: 'ID bình luận']
+  user_id bigint [ref: > users.id, not null, note: 'ID người thích']
+  created_at timestamp [default: `now()`]
+  
+  Note: 'Ai đã thích bình luận nào'
+  indexes {
+    (comment_id, user_id) [unique]
+  }
+}
+
+Table bookmarks {
+  id bigint [pk, increment]
+  post_id bigint [ref: > posts.id, not null, note: 'ID bài viết']
+  user_id bigint [ref: > users.id, not null, note: 'ID người lưu']
+  created_at timestamp [default: `now()`, note: 'Ngày lưu']
+  
+  Note: 'Bài viết đã lưu của người dùng'
+  indexes {
+    (post_id, user_id) [unique]
+  }
+}
+
+Table follows {
+  id bigint [pk, increment]
+  follower_id bigint [ref: > users.id, not null, note: 'ID người theo dõi']
+  following_id bigint [ref: > users.id, not null, note: 'ID người được theo dõi']
+  created_at timestamp [default: `now()`, note: 'Ngày theo dõi']
+  
+  Note: 'Người dùng theo dõi nhau'
+  indexes {
+    (follower_id, following_id) [unique]
+  }
+}
+
+Table trending_topics {
+  id bigint [pk, increment]
+  topic_name varchar(255) [unique, not null, note: 'Tên chủ đề']
+  post_count int [default: 0, note: 'Số bài viết']
+  trend_direction varchar(10) [note: 'Xu hướng: tăng, giảm']
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+  
+  Note: 'Chủ đề đang hot'
+}
+
+// ============================================
+// CỬA HÀNG - MARKETPLACE
+// ============================================
+
+Table categories {
+  id bigint [pk, increment]
+  name varchar(255) [unique, not null, note: 'Tên danh mục']
+  slug varchar(255) [unique, note: 'Tên rút gọn cho URL']
+  description text [note: 'Mô tả danh mục']
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+  
+  Note: 'Danh mục sản phẩm: vật tư nông nghiệp, hạt giống, nông sản, dụng cụ'
+}
+
+Table products {
+  id bigint [pk, increment]
+  seller_id bigint [ref: > users.id, not null, note: 'ID người bán (doanh nghiệp)']
+  category_id bigint [ref: > categories.id, note: 'ID danh mục']
+  name varchar(255) [not null, note: 'Tên sản phẩm']
+  description text [note: 'Mô tả sản phẩm']
+  price decimal(12,2) [not null, note: 'Giá bán']
+  image_url text [note: 'Link ảnh chính']
+  stock_quantity int [default: 0, note: 'Số lượng tồn kho']
+  rating_avg decimal(3,2) [default: 0, note: 'Điểm đánh giá trung bình']
+  review_count int [default: 0, note: 'Số lượt đánh giá']
+  status varchar(50) [default: 'active', note: 'Trạng thái: bán, ngưng, hết hàng']
+  created_at timestamp [default: `now()`, note: 'Ngày tạo']
+  updated_at timestamp [default: `now()`]
+  
+  Note: 'Sản phẩm trong cửa hàng'
+}
+
+Table product_images {
+  id bigint [pk, increment]
+  product_id bigint [ref: > products.id, not null, note: 'ID sản phẩm']
+  image_url text [not null, note: 'Link ảnh']
+  display_order int [default: 0, note: 'Thứ tự hiển thị']
+  created_at timestamp [default: `now()`]
+  
+  Note: 'Nhiều ảnh cho mỗi sản phẩm'
+}
+
+Table product_reviews {
+  id bigint [pk, increment]
+  product_id bigint [ref: > products.id, not null, note: 'ID sản phẩm']
+  user_id bigint [ref: > users.id, not null, note: 'ID người đánh giá']
+  rating int [not null, note: 'Điểm từ 1 đến 5']
+  comment text [note: 'Nhận xét']
+  created_at timestamp [default: `now()`, note: 'Ngày đánh giá']
+  updated_at timestamp [default: `now()`]
+  
+  Note: 'Đánh giá sản phẩm'
+  indexes {
+    (product_id, user_id) [unique]
+  }
+}
+
+Table cart_items {
+  id bigint [pk, increment]
+  user_id bigint [ref: > users.id, not null, note: 'ID người mua']
+  product_id bigint [ref: > products.id, not null, note: 'ID sản phẩm']
+  quantity int [not null, default: 1, note: 'Số lượng']
+  created_at timestamp [default: `now()`, note: 'Ngày thêm vào giỏ']
+  updated_at timestamp [default: `now()`]
+  
+  Note: 'Giỏ hàng của người dùng'
+  indexes {
+    (user_id, product_id) [unique]
+  }
+}
+
+Table orders {
+  id bigint [pk, increment]
+  order_number varchar(50) [unique, not null, note: 'Mã đơn hàng']
+  buyer_id bigint [ref: > users.id, not null, note: 'ID người mua']
+  seller_id bigint [ref: > users.id, not null, note: 'ID người bán']
+  total_amount decimal(12,2) [not null, note: 'Tổng tiền']
+  status varchar(50) [default: 'pending', note: 'Trạng thái: chờ xác nhận, đang giao, hoàn thành, hủy']
+  shipping_address text [not null, note: 'Địa chỉ giao hàng']
+  shipping_phone varchar(20) [not null, note: 'Số điện thoại người nhận']
+  shipping_name varchar(255) [not null, note: 'Tên người nhận']
+  payment_method varchar(50) [note: 'Cách thanh toán: COD, chuyển khoản, ví điện tử']
+  payment_status varchar(50) [default: 'pending', note: 'Trạng thái thanh toán: chờ, đã trả, lỗi']
+  created_at timestamp [default: `now()`, note: 'Ngày đặt hàng']
+  updated_at timestamp [default: `now()`]
+  
+  Note: 'Đơn hàng'
+}
+
+Table order_items {
+  id bigint [pk, increment]
+  order_id bigint [ref: > orders.id, not null, note: 'ID đơn hàng']
+  product_id bigint [ref: > products.id, not null, note: 'ID sản phẩm']
+  product_name varchar(255) [not null, note: 'Tên sản phẩm (lưu lại)']
+  product_price decimal(12,2) [not null, note: 'Giá tại thời điểm mua']
+  quantity int [not null, note: 'Số lượng']
+  subtotal decimal(12,2) [not null, note: 'Thành tiền']
+  created_at timestamp [default: `now()`]
+  
+  Note: 'Chi tiết từng sản phẩm trong đơn hàng'
+}
+
+Table traceability_records {
+  id bigint [pk, increment]
+  product_id bigint [ref: > products.id, not null, note: 'ID sản phẩm']
+  step_date date [not null, note: 'Ngày thực hiện']
+  action varchar(255) [not null, note: 'Hành động: gieo mạ, bón phân, thu hoạch, ...']
+  detail text [note: 'Chi tiết']
+  icon varchar(50) [note: 'Icon hiển thị']
+  created_at timestamp [default: `now()`]
+  
+  Note: 'Lịch sử quá trình sản xuất sản phẩm'
+}
+
+// ============================================
+// NHẬT KÝ NÔNG NGHIỆP
+// ============================================
+
+Table seasons {
+  id bigint [pk, increment]
+  user_id bigint [ref: > users.id, not null, note: 'ID nông dân']
+  name varchar(255) [not null, note: 'Tên vụ mùa']
+  crop varchar(255) [not null, note: 'Loại cây trồng']
+  start_date date [not null, note: 'Ngày bắt đầu']
+  end_date date [note: 'Ngày kết thúc']
+  status varchar(50) [default: 'active', note: 'Trạng thái: đang trồng, đã xong, hủy']
+  created_at timestamp [default: `now()`, note: 'Ngày tạo']
+  updated_at timestamp [default: `now()`]
+  
+  Note: 'Vụ mùa/nông vụ'
+}
+
+Table farming_activities {
+  id bigint [pk, increment]
+  season_id bigint [ref: > seasons.id, note: 'ID vụ mùa']
+  user_id bigint [ref: > users.id, not null, note: 'ID nông dân']
+  activity_name varchar(255) [not null, note: 'Tên hoạt động']
+  activity_type varchar(50) [not null, note: 'Loại: bón phân, tưới nước, phun thuốc, thu hoạch, khác']
+  activity_date date [not null, note: 'Ngày thực hiện']
+  location varchar(255) [note: 'Vị trí']
+  details text [note: 'Chi tiết']
+  created_at timestamp [default: `now()`, note: 'Ngày ghi nhận']
+  updated_at timestamp [default: `now()`]
+  
+  Note: 'Hoạt động nông nghiệp đã thực hiện'
+}
+
+Table farming_activity_images {
+  id bigint [pk, increment]
+  activity_id bigint [ref: > farming_activities.id, not null, note: 'ID hoạt động']
+  image_url text [not null, note: 'Link ảnh']
+  display_order int [default: 0, note: 'Thứ tự hiển thị']
+  created_at timestamp [default: `now()`]
+  
+  Note: 'Ảnh của hoạt động nông nghiệp'
+}
+
+Table farming_stats {
+  id bigint [pk, increment]
+  season_id bigint [ref: > seasons.id, note: 'ID vụ mùa']
+  user_id bigint [ref: > users.id, not null, note: 'ID nông dân']
+  stat_type varchar(50) [not null, note: 'Loại thống kê: độ ẩm đất, nhiệt độ, mức độ dịch bệnh']
+  stat_value varchar(100) [not null, note: 'Giá trị']
+  measured_at timestamp [default: `now()`, note: 'Thời điểm đo']
+  
+  Note: 'Thống kê: độ ẩm, nhiệt độ, dịch bệnh'
+}
+
+// ============================================
+// DỊCH VỤ AI
+// ============================================
+
+Table ai_chat_sessions {
+  id bigint [pk, increment]
+  user_id bigint [ref: > users.id, not null, note: 'ID người dùng']
+  session_title varchar(255) [note: 'Tiêu đề phiên chat']
+  created_at timestamp [default: `now()`, note: 'Ngày tạo']
+  updated_at timestamp [default: `now()`]
+  
+  Note: 'Phiên chat với AI'
+}
+
+Table ai_chat_messages {
+  id bigint [pk, increment]
+  session_id bigint [ref: > ai_chat_sessions.id, not null, note: 'ID phiên chat']
+  role varchar(20) [not null, note: 'Vai trò: người dùng hoặc AI']
+  message_content text [not null, note: 'Nội dung tin nhắn']
+  created_at timestamp [default: `now()`, note: 'Thời gian gửi']
+  
+  Note: 'Tin nhắn trong phiên chat AI'
+}
+
+Table ai_analysis_results {
+  id bigint [pk, increment]
+  user_id bigint [ref: > users.id, not null, note: 'ID người dùng']
+  analysis_type varchar(100) [not null, note: 'Loại phân tích']
+  input_data jsonb [note: 'Dữ liệu đầu vào']
+  result_data jsonb [note: 'Dữ liệu kết quả']
+  created_at timestamp [default: `now()`, note: 'Ngày phân tích']
+  
+  Note: 'Kết quả phân tích của AI'
+}

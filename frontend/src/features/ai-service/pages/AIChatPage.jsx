@@ -407,7 +407,7 @@ Bạn đang gặp loại sâu bệnh nào?`,
                 🤖
               </div>
               <div>
-                <h1 className="text-2xl font-[900] text-gray-900">AI Chẩn đoán Cây trồng</h1>
+                <h1 className="text-2xl font-bold text-gray-900">AI Chẩn đoán Cây trồng</h1>
                 <p className="text-sm text-gray-500 font-medium">Hỗ trợ 24/7 • Phản hồi nhanh</p>
               </div>
             </div>
@@ -415,7 +415,7 @@ Bạn đang gặp loại sâu bệnh nào?`,
         </div>
 
         {/* Chat Container */}
-        <div className="bg-white rounded-[40px] shadow-xl border border-gray-100 overflow-hidden flex flex-col" style={{ height: 'calc(100vh - 200px)', minHeight: '600px' }}>
+        <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden flex flex-col" style={{ height: 'calc(100vh - 200px)', minHeight: '600px' }}>
           {/* Messages Area */}
           <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-gradient-to-b from-gray-50 to-white">
             {messages.map((message) => (

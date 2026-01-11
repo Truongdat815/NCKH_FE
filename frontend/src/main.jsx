@@ -15,15 +15,41 @@ root.render(
       <div className="antialiased text-gray-900 bg-gray-50/50 min-h-screen">
         <RouterProvider router={router} />
         <Toaster 
-          position="top-right" 
+          position="top-right"
+          containerClassName="mt-16"
           toastOptions={{
-            duration: 4000,
+            duration: 3000,
             style: {
               borderRadius: '16px',
-              background: '#333',
-              color: '#fff',
+              background: '#fff',
+              color: '#1e293b',
               fontSize: '14px',
-              padding: '12px 24px',
+              padding: '16px 20px',
+              boxShadow: '0 10px 40px rgba(0,0,0,0.1)',
+              border: '1px solid #e5e7eb',
+              fontWeight: '600',
+            },
+            success: {
+              iconTheme: {
+                primary: '#10b981',
+                secondary: '#fff',
+              },
+              style: {
+                background: '#f0fdf4',
+                color: '#065f46',
+                borderColor: '#86efac',
+              },
+            },
+            error: {
+              iconTheme: {
+                primary: '#ef4444',
+                secondary: '#fff',
+              },
+              style: {
+                background: '#fef2f2',
+                color: '#991b1b',
+                borderColor: '#fca5a5',
+              },
             },
           }} 
         />

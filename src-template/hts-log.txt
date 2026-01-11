@@ -1,0 +1,26 @@
+HTTrack3.49-2+htsswf+htsjava launched on Sun, 11 Jan 2026 03:02:32 at https://themes.semicolonweb.com/html/canvas/v6/intro.html +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar
+(winhttrack -qwC2%Ps2u1%s%uN0%I0p3DaK0H0%kf2A25000%f#f -F "Mozilla/4.5 (compatible; HTTrack 3.0x; Windows 98)" -%F "<!-- Mirrored from %s%s by HTTrack Website Copier/3.x [XR&CO'2014], %s -->" -%l "en, *" https://themes.semicolonweb.com/html/canvas/v6/intro.html -O1 "C:\My Web Sites\nghiencuukhoahoc" +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar )
+
+Information, Warnings and Errors reported for this mirror:
+note:	the hts-log.txt file, and hts-cache folder, may contain sensitive information,
+	such as username/password authentication for websites mirrored in this project
+	do not share these files/folders if you want these information to remain private
+
+03:02:35	Warning: 	Found for https://themes.semicolonweb.com/robots.txt
+03:02:35	Warning: 	File has moved from https://themes.semicolonweb.com/robots.txt to http://themes.semicolonweb.com/html/canvas/intro.html
+04:08:59	Warning: 	Retry after error 500 (Internal Server Error) at link https://themes.semicolonweb.com/html/canvas/v6/rs-demo-streams-twitter.php (from https://themes.semicolonweb.com/html/canvas/v6/rs-demos.html)
+04:15:49	Warning: 	Warning: store application/octet-stream without scan: C:/My Web Sites/nghiencuukhoahoc/themes.semicolonweb.com/html/canvas/v6/demos/photographer/images/icons/loader.svg
+04:23:12	Warning: 	Retry after error 500 (Internal Server Error) at link https://themes.semicolonweb.com/html/canvas/v6/rs-demo-streams-twitter.php (from https://themes.semicolonweb.com/html/canvas/v6/rs-demos.html)
+04:25:20	Warning: 	Warning: store application/octet-stream without scan: C:/My Web Sites/nghiencuukhoahoc/themes.semicolonweb.com/html/canvas/v6/demos/photographer/images/icons/loader-white.svg
+04:25:39	Error: 	"Internal Server Error" (500) after 2 retries at link https://themes.semicolonweb.com/html/canvas/v6/rs-demo-streams-twitter.php (from https://themes.semicolonweb.com/html/canvas/v6/rs-demos.html)
+04:25:39	Warning: 	Found for https://themes.semicolonweb.com/html/canvas/v6/chrome-extension://
+04:25:39	Warning: 	File has moved from https://themes.semicolonweb.com/html/canvas/v6/chrome-extension:// to http://themes.semicolonweb.com/html/canvas/intro.html
+04:25:39	Warning: 	Found for https://themes.semicolonweb.com/html/canvas/v6/$1/
+04:25:39	Warning: 	File has moved from https://themes.semicolonweb.com/html/canvas/v6/$1/ to http://themes.semicolonweb.com/html/canvas/intro.html
+04:25:39	Warning: 	Found for https://themes.semicolonweb.com/html/canvas/v6/embed/
+04:25:39	Warning: 	File has moved from https://themes.semicolonweb.com/html/canvas/v6/embed/ to http://themes.semicolonweb.com/html/canvas/intro.html
+04:25:39	Warning: 	Found for https://themes.semicolonweb.com/html/canvas/v6/captioned/
+04:25:39	Warning: 	File has moved from https://themes.semicolonweb.com/html/canvas/v6/captioned/ to http://themes.semicolonweb.com/html/canvas/intro.html
+
+HTTrack Website Copier/3.49-2 mirror complete in 1 hours 23 minutes 30 seconds : 5126 links scanned, 5117 files written (449651190 bytes overall) [386890591 bytes received at 77223 bytes/sec], 81431817 bytes transferred using HTTP compression in 1632 files, ratio 17%, 36.2 requests per connection
+(1 errors, 14 warnings, 0 messages)

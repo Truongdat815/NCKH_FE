@@ -23,12 +23,19 @@ const LoginPage = () => {
   return (
     <PageTransition>
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 via-white to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-[40px] shadow-2xl border border-gray-100">
+        <div className="max-w-md w-full space-y-6 bg-white p-8 rounded-3xl shadow-xl border border-gray-100">
           <div className="text-center">
-            <div className="mx-auto h-16 w-16 bg-gradient-to-br from-emerald-600 to-green-600 rounded-2xl flex items-center justify-center shadow-2xl shadow-emerald-200 mb-6">
-              <span className="text-3xl">🌾</span>
+            <div className="mx-auto h-14 w-14 bg-gradient-to-br from-emerald-600 to-green-600 rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-200/50 mb-5 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/20 to-transparent"></div>
+              <svg className="w-9 h-9 text-white relative z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 2L8 6L10 8L12 6L14 8L16 6L12 2Z" fill="currentColor" opacity="0.9"/>
+                <path d="M12 6L8 10L10 12L12 10L14 12L16 10L12 6Z" fill="currentColor" opacity="0.8"/>
+                <path d="M12 10L8 14L10 16L12 14L14 16L16 14L12 10Z" fill="currentColor" opacity="0.7"/>
+                <line x1="12" y1="16" x2="12" y2="22" stroke="currentColor" strokeWidth="2.5"/>
+                <path d="M12 18L9 20L10 22L12 20L14 22L15 20L12 18Z" fill="currentColor" opacity="0.6"/>
+              </svg>
             </div>
-            <h2 className="text-4xl font-[900] text-gray-900 tracking-tighter">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">
               Chào mừng trở lại!
             </h2>
             <p className="mt-3 text-sm text-gray-400 font-bold uppercase tracking-widest">
@@ -41,16 +48,16 @@ const LoginPage = () => {
 
           {/* Role Selection */}
           <div>
-            <label className="block text-sm font-black text-gray-700 uppercase tracking-widest mb-3">
+            <label className="block text-sm font-bold text-gray-700 uppercase tracking-widest mb-3">
               Đăng nhập với vai trò:
             </label>
             <div className="grid grid-cols-2 gap-2">
               {[
-                { value: 'admin', label: '👑 Admin', color: 'bg-purple-100 text-purple-700 border-purple-200' },
-                { value: 'enterprise', label: '🏢 Doanh nghiệp', color: 'bg-blue-100 text-blue-700 border-blue-200' },
-                { value: 'farmer', label: '🌾 Nông dân', color: 'bg-emerald-100 text-emerald-700 border-emerald-200' },
-                { value: 'engineer', label: '🔬 Kỹ sư', color: 'bg-orange-100 text-orange-700 border-orange-200' },
-                { value: 'consumer', label: '🛒 Người tiêu dùng', color: 'bg-pink-100 text-pink-700 border-pink-200' },
+                { value: 'admin', label: 'Admin', icon: '👑', color: 'bg-purple-100 text-purple-700 border-purple-200' },
+                { value: 'enterprise', label: 'Doanh nghiệp', icon: '🏢', color: 'bg-blue-100 text-blue-700 border-blue-200' },
+                { value: 'farmer', label: 'Nông dân', icon: '🌾', color: 'bg-emerald-100 text-emerald-700 border-emerald-200' },
+                { value: 'engineer', label: 'Kỹ sư', icon: '🔬', color: 'bg-orange-100 text-orange-700 border-orange-200' },
+                { value: 'consumer', label: 'Người tiêu dùng', icon: '🛒', color: 'bg-pink-100 text-pink-700 border-pink-200' },
               ].map(r => (
                 <button
                   key={r.value}
@@ -62,7 +69,7 @@ const LoginPage = () => {
                       : 'bg-gray-50 text-gray-500 border-gray-200 hover:bg-gray-100'
                   }`}
                 >
-                  {r.label}
+                  <span className="mr-1">{r.icon}</span> {r.label}
                 </button>
               ))}
             </div>
@@ -123,7 +130,7 @@ const LoginPage = () => {
 
             <button
               type="submit"
-              className="group relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-black rounded-2xl text-white bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-all shadow-xl shadow-emerald-100 uppercase tracking-widest"
+              className="group relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-bold rounded-2xl text-white bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-all shadow-xl shadow-emerald-100 uppercase tracking-widest"
             >
               Đăng nhập ngay →
             </button>

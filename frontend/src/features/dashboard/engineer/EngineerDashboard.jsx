@@ -78,10 +78,10 @@ const EngineerDashboard = () => {
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <div>
-            <h1 className="text-4xl sm:text-5xl font-[900] text-gray-900 tracking-tight">Dashboard Kỹ Sư</h1>
+            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight">Dashboard Kỹ Sư</h1>
             <p className="text-gray-400 font-bold uppercase tracking-wider text-xs mt-2">Tư vấn & Hỗ trợ Nông dân</p>
           </div>
-          <Link to="/community" className="px-6 py-3 bg-emerald-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl shadow-emerald-100 hover:scale-105 transition-all flex items-center gap-2">
+          <Link to="/community" className="px-6 py-3 bg-emerald-600 text-white rounded-2xl font-bold text-xs uppercase tracking-widest shadow-xl shadow-emerald-100 hover:scale-105 transition-all flex items-center gap-2">
             <ChatBubbleLeftRightIcon className="w-5 h-5" /> Trả lời câu hỏi
           </Link>
         </div>
@@ -89,14 +89,14 @@ const EngineerDashboard = () => {
         {/* Stats Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {stats.map((stat, idx) => (
-            <div key={idx} className="bg-white p-8 rounded-[40px] border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 group">
-              <div className={`w-14 h-14 ${stat.color} rounded-2xl flex items-center justify-center text-white mb-6 shadow-lg shadow-inherit/30 group-hover:rotate-6 transition-transform`}>
-                <stat.icon className="w-7 h-7" />
+            <div key={idx} className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 group">
+              <div className={`w-12 h-12 ${stat.color} rounded-2xl flex items-center justify-center text-white mb-4 shadow-md group-hover:scale-110 transition-transform duration-300`}>
+                <stat.icon className="w-6 h-6" />
               </div>
-              <p className="text-xs font-black text-gray-400 uppercase tracking-widest mb-1">{stat.label}</p>
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">{stat.label}</p>
               <div className="flex items-end justify-between">
-                <h3 className="text-2xl font-[900] text-gray-900 tracking-tighter">{stat.value}</h3>
-                <span className="text-xs font-black text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg">{stat.trend}</span>
+                <h3 className="text-2xl font-bold text-gray-900 tracking-tight">{stat.value}</h3>
+                <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg">{stat.trend}</span>
               </div>
             </div>
           ))}
@@ -106,7 +106,7 @@ const EngineerDashboard = () => {
           {/* Recent Questions */}
           <div className="lg:col-span-2 bg-white rounded-3xl p-6 border border-gray-100 shadow-sm">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-              <h3 className="text-xl font-[900] text-gray-900">Câu Hỏi Gần Đây</h3>
+              <h3 className="text-xl font-bold text-gray-900">Câu Hỏi Gần Đây</h3>
               <Link to="/community" className="text-sm font-bold text-emerald-600 hover:underline self-start sm:self-auto">Xem tất cả →</Link>
             </div>
             <div className="space-y-4">
@@ -118,13 +118,13 @@ const EngineerDashboard = () => {
                         {q.farmer.charAt(0)}
                       </div>
                       <div>
-                        <h4 className="font-black text-gray-900">{q.farmer}</h4>
+                        <h4 className="font-bold text-gray-900">{q.farmer}</h4>
                         <p className="text-xs text-gray-400 font-bold">{q.time}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-black rounded-full">{q.reward}</span>
-                      <span className={`px-3 py-1 text-xs font-black rounded-full ${
+                      <span className="px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full">{q.reward}</span>
+                      <span className={`px-3 py-1 text-xs font-bold rounded-full ${
                         q.status === 'Đã trả lời' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
                       }`}>
                         {q.status}
@@ -152,11 +152,11 @@ const EngineerDashboard = () => {
                 <div className="flex items-center justify-between mb-6">
                   <div>
                     <p className="text-xs font-bold text-emerald-200 uppercase tracking-widest mb-2">Ví AgriSmart</p>
-                    <h3 className="text-3xl font-black">1.225.000₫</h3>
+                    <h3 className="text-3xl font-bold">1.225.000₫</h3>
                   </div>
                   <div className="text-4xl">💰</div>
                 </div>
-                <button className="w-full py-3 bg-white text-emerald-900 rounded-xl font-black text-sm uppercase tracking-widest shadow-lg hover:bg-emerald-50 transition-all">
+                <button className="w-full py-3 bg-white text-emerald-900 rounded-xl font-bold text-sm uppercase tracking-widest shadow-lg hover:bg-emerald-50 transition-all">
                   Rút tiền
                 </button>
               </div>
@@ -164,13 +164,13 @@ const EngineerDashboard = () => {
 
             {/* Expertise Areas */}
             <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
-              <h4 className="text-base font-[900] mb-4">Lĩnh Vực Chuyên Môn</h4>
+              <h4 className="text-base font-bold mb-4">Lĩnh Vực Chuyên Môn</h4>
               <div className="space-y-4">
                 {expertise.map((exp, idx) => (
                   <div key={idx} className="p-4 bg-gray-50 rounded-2xl">
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm font-black text-gray-900">{exp.topic}</span>
-                      <span className="text-xs font-black text-emerald-600">{exp.rating}⭐</span>
+                      <span className="text-sm font-bold text-gray-900">{exp.topic}</span>
+                      <span className="text-xs font-bold text-emerald-600">{exp.rating}⭐</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
@@ -185,13 +185,13 @@ const EngineerDashboard = () => {
 
             {/* Monthly Earnings */}
             <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
-              <h4 className="text-base font-[900] mb-4">Doanh Thu 3 Tháng Gần Đây</h4>
+              <h4 className="text-base font-bold mb-4">Doanh Thu 3 Tháng Gần Đây</h4>
               <div className="space-y-4">
                 {earnings.map((earning, idx) => (
                   <div key={idx} className="flex justify-between items-center p-4 bg-gray-50 rounded-2xl">
                     <div>
                       <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">{earning.month}</p>
-                      <p className="text-lg font-black text-gray-900 mt-1">{earning.amount}</p>
+                      <p className="text-lg font-bold text-gray-900 mt-1">{earning.amount}</p>
                       <p className="text-xs text-gray-500 font-medium">{earning.questions} câu • {earning.avgRating}⭐</p>
                     </div>
                     <div className="text-2xl">📈</div>

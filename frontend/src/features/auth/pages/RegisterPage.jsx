@@ -29,13 +29,13 @@ const RegisterPage = () => {
   return (
     <PageTransition>
       <div className="min-h-screen bg-gray-50/50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl w-full space-y-10 bg-white p-12 rounded-[50px] shadow-2xl border border-gray-100">
+        <div className="max-w-3xl w-full space-y-6 bg-white p-8 rounded-3xl shadow-xl border border-gray-100">
           <div className="text-center">
-            <h2 className="text-4xl font-[900] text-gray-900 tracking-tighter font-lexend uppercase">Gia nhập AgriSmart</h2>
-            <p className="mt-3 text-sm text-gray-400 font-bold uppercase tracking-widest">Lựa chọn vai trò phù hợp với bạn</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight uppercase">Gia nhập AgriSmart</h2>
+            <p className="mt-2 text-sm text-gray-400 font-bold uppercase tracking-wider">Lựa chọn vai trò phù hợp với bạn</p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {roles.map((role) => (
               <div
                 key={role.id}
@@ -50,30 +50,30 @@ const RegisterPage = () => {
                   <role.icon className="h-8 w-8 stroke-[2px]" />
                 </div>
                 <div>
-                  <h3 className={`font-black text-sm uppercase tracking-widest ${selectedRole === role.id ? 'text-emerald-700' : 'text-gray-900'}`}>{role.name}</h3>
+                  <h3 className={`font-bold text-sm uppercase tracking-widest ${selectedRole === role.id ? 'text-emerald-700' : 'text-gray-900'}`}>{role.name}</h3>
                 </div>
               </div>
             ))}
           </div>
 
-          <form onSubmit={handleSubmit} className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <input type="text" required className="appearance-none rounded-2xl block w-full px-5 py-4 border border-gray-100 placeholder-gray-400 text-gray-900 focus:ring-2 focus:ring-emerald-500 bg-gray-50/50 font-medium outline-none" placeholder="Họ và tên" />
-            <input type="text" required className="appearance-none rounded-2xl block w-full px-5 py-4 border border-gray-100 placeholder-gray-400 text-gray-900 focus:ring-2 focus:ring-emerald-500 bg-gray-50/50 font-medium outline-none" placeholder="Số điện thoại" />
-            <input type="email" required className="md:col-span-2 appearance-none rounded-2xl block w-full px-5 py-4 border border-gray-100 placeholder-gray-400 text-gray-900 focus:ring-2 focus:ring-emerald-500 bg-gray-50/50 font-medium outline-none" placeholder="Địa chỉ Email" />
-            <input type="password" required className="appearance-none rounded-2xl block w-full px-5 py-4 border border-gray-100 placeholder-gray-400 text-gray-900 focus:ring-2 focus:ring-emerald-500 bg-gray-50/50 font-medium outline-none" placeholder="Mật khẩu" />
-            <input type="password" required className="appearance-none rounded-2xl block w-full px-5 py-4 border border-gray-100 placeholder-gray-400 text-gray-900 focus:ring-2 focus:ring-emerald-500 bg-gray-50/50 font-medium outline-none" placeholder="Xác nhận" />
+          <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input type="text" required className="appearance-none rounded-2xl block w-full px-4 py-3 border border-gray-200 placeholder-gray-400 text-gray-900 focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-gray-50/50 font-medium outline-none transition-all" placeholder="Họ và tên" />
+            <input type="text" required className="appearance-none rounded-2xl block w-full px-4 py-3 border border-gray-200 placeholder-gray-400 text-gray-900 focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-gray-50/50 font-medium outline-none transition-all" placeholder="Số điện thoại" />
+            <input type="email" required className="md:col-span-2 appearance-none rounded-2xl block w-full px-4 py-3 border border-gray-200 placeholder-gray-400 text-gray-900 focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-gray-50/50 font-medium outline-none transition-all" placeholder="Địa chỉ Email" />
+            <input type="password" required className="appearance-none rounded-2xl block w-full px-4 py-3 border border-gray-200 placeholder-gray-400 text-gray-900 focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-gray-50/50 font-medium outline-none transition-all" placeholder="Mật khẩu" />
+            <input type="password" required className="appearance-none rounded-2xl block w-full px-4 py-3 border border-gray-200 placeholder-gray-400 text-gray-900 focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-gray-50/50 font-medium outline-none transition-all" placeholder="Xác nhận" />
 
             <div className="md:col-span-2 flex items-center gap-3 bg-gray-50 p-4 rounded-2xl">
-              <input type="checkbox" required className="h-5 w-5 text-emerald-600 focus:ring-emerald-500 border-gray-200 rounded-lg" />
+              <input type="checkbox" required className="h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-gray-200 rounded-lg" />
               <label className="text-sm font-bold text-gray-500">Tôi đồng ý với mọi điều khoản bảo mật của AgriSmart</label>
             </div>
 
-            <button type="submit" className="md:col-span-2 py-5 bg-emerald-600 text-white font-black rounded-[25px] shadow-2xl shadow-emerald-100 hover:bg-emerald-700 transition-all uppercase tracking-[0.2em] font-lexend mt-4">
+            <button type="submit" className="md:col-span-2 py-3.5 bg-emerald-600 text-white font-bold rounded-2xl shadow-lg shadow-emerald-200/50 hover:bg-emerald-700 hover:shadow-xl transition-all duration-200 uppercase tracking-wider text-sm active:scale-[0.98]">
               Đăng ký ngay
             </button>
           </form>
 
-          <p className="text-center text-sm text-gray-400 font-bold uppercase tracking-widest pt-6 border-t border-gray-50">
+          <p className="text-center text-sm text-gray-400 font-bold uppercase tracking-wider pt-4 border-t border-gray-100">
             Đã có tài khoản?{' '}
             <Link to="/login" className="text-emerald-600 hover:underline">Đăng nhập</Link>
           </p>

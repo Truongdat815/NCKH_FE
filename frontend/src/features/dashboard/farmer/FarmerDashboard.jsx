@@ -8,7 +8,9 @@ import {
   PlusCircleIcon,
   ChartBarIcon,
   CurrencyDollarIcon,
-  CalendarIcon
+  CalendarIcon,
+  RectangleStackIcon,
+  ClipboardDocumentListIcon
 } from '@heroicons/react/24/solid'
 import { BookOpenIcon, QrCodeIcon } from '@heroicons/react/24/outline'
 import PageTransition from '../../../components/common/PageTransition'
@@ -16,10 +18,10 @@ import PageTransition from '../../../components/common/PageTransition'
 const FarmerDashboard = () => {
   // Hardcode data cho dashboard
   const stats = [
-    { label: 'Vụ mùa hiện tại', value: 'Lúa ST25 Đông Xuân', icon: '🌾', color: 'bg-emerald-50 text-emerald-600', link: '/farming-log' },
-    { label: 'Sản phẩm đã bán', value: '2,450 kg', icon: '📦', color: 'bg-blue-50 text-blue-600', trend: '+15%' },
-    { label: 'Doanh thu tháng', value: '12.500.000₫', icon: '💰', color: 'bg-orange-50 text-orange-600', trend: '+8%' },
-    { label: 'Đơn hàng chờ', value: '8 đơn', icon: '📋', color: 'bg-purple-50 text-purple-600', trend: 'Mới' },
+    { label: 'Vụ mùa hiện tại', value: 'Lúa ST25 Đông Xuân', icon: BeakerIcon, color: 'bg-emerald-50 text-emerald-600', link: '/farming-log' },
+    { label: 'Sản phẩm đã bán', value: '2,450 kg', icon: RectangleStackIcon, color: 'bg-blue-50 text-blue-600', trend: '+15%' },
+    { label: 'Doanh thu tháng', value: '12.500.000₫', icon: CurrencyDollarIcon, color: 'bg-orange-50 text-orange-600', trend: '+8%' },
+    { label: 'Đơn hàng chờ', value: '8 đơn', icon: ClipboardDocumentListIcon, color: 'bg-purple-50 text-purple-600', trend: 'Mới' },
   ]
 
   const farmingLogs = [
@@ -83,14 +85,14 @@ const FarmerDashboard = () => {
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <div>
-            <h1 className="text-4xl sm:text-5xl font-[900] text-gray-900 tracking-tight">Dashboard Nông Dân</h1>
-            <p className="text-gray-400 font-bold uppercase tracking-wider text-xs mt-2">Quản lý vụ mùa & Bán hàng</p>
+            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight">Dashboard Nông Dân</h1>
+            <p className="text-gray-400 font-semibold uppercase tracking-wider text-xs mt-2">Quản lý vụ mùa & Bán hàng</p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <Link to="/farming-log" className="px-6 py-3 bg-white border border-gray-200 rounded-2xl font-black text-xs uppercase tracking-widest shadow-sm hover:bg-gray-50 transition-all flex items-center gap-2">
+            <Link to="/farming-log" className="px-6 py-3 bg-white border border-gray-200 rounded-2xl font-bold text-xs uppercase tracking-widest shadow-sm hover:bg-gray-50 transition-all flex items-center gap-2">
               <BookOpenIcon className="w-5 h-5" /> Nhật Ký
             </Link>
-            <button className="px-6 py-3 bg-emerald-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl shadow-emerald-100 hover:scale-105 transition-all flex items-center gap-2">
+            <button className="px-6 py-3 bg-emerald-600 text-white rounded-2xl font-bold text-xs uppercase tracking-widest shadow-xl shadow-emerald-100 hover:scale-105 transition-all flex items-center gap-2">
               <PlusCircleIcon className="w-5 h-5" /> Tạo Nhật Ký
             </button>
           </div>
@@ -102,16 +104,16 @@ const FarmerDashboard = () => {
             <Link 
               key={idx} 
               to={stat.link || '#'}
-              className="bg-white p-8 rounded-[40px] border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 group cursor-pointer"
+              className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 group cursor-pointer"
             >
-              <div className={`w-16 h-16 ${stat.color} rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-inner group-hover:scale-110 transition-transform`}>
+              <div className={`w-14 h-14 ${stat.color} rounded-2xl flex items-center justify-center text-2xl mb-4 shadow-md group-hover:scale-110 transition-transform duration-300`}>
                 {stat.icon}
               </div>
-              <p className="text-xs font-black text-gray-400 uppercase tracking-widest mb-1">{stat.label}</p>
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">{stat.label}</p>
               <div className="flex items-end justify-between">
-                <h3 className="text-2xl font-[900] text-gray-900 tracking-tighter">{stat.value}</h3>
+                <h3 className="text-2xl font-bold text-gray-900 tracking-tight">{stat.value}</h3>
                 {stat.trend && (
-                  <span className="text-xs font-black text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg">{stat.trend}</span>
+                  <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg">{stat.trend}</span>
                 )}
               </div>
             </Link>
@@ -122,7 +124,7 @@ const FarmerDashboard = () => {
           {/* Farming Log Timeline */}
           <div className="lg:col-span-2 bg-white rounded-3xl p-6 border border-gray-100 shadow-sm">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-              <h3 className="text-xl font-[900] text-gray-900">Nhật Ký Canh Tác</h3>
+              <h3 className="text-xl font-bold text-gray-900">Nhật Ký Canh Tác</h3>
               <Link to="/farming-log" className="text-sm font-bold text-emerald-600 hover:underline self-start sm:self-auto">Xem tất cả →</Link>
             </div>
             <div className="space-y-6">
@@ -139,10 +141,10 @@ const FarmerDashboard = () => {
                   <div className="flex-1 bg-gray-50/50 p-6 rounded-3xl border border-transparent hover:border-emerald-200 transition-all cursor-pointer group">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-3">
-                        <span className="text-xs font-black text-emerald-600 uppercase tracking-widest bg-emerald-50 px-3 py-1 rounded-full">{log.type}</span>
+                        <span className="text-xs font-semibold text-emerald-600 uppercase tracking-widest bg-emerald-50 px-3 py-1 rounded-full">{log.type}</span>
                         <span className="text-xs font-bold text-gray-400">{log.date}</span>
                       </div>
-                      <span className={`text-xs font-black px-2 py-1 rounded-lg ${
+                      <span className={`text-xs font-semibold px-2 py-1 rounded-lg ${
                         log.status === 'Hoàn thành' ? 'bg-emerald-100 text-emerald-700' :
                         log.status === 'Đã xử lý' ? 'bg-blue-100 text-blue-700' :
                         log.status === 'Bình thường' ? 'bg-gray-100 text-gray-700' :
@@ -168,9 +170,9 @@ const FarmerDashboard = () => {
                 <div className="w-24 h-24 bg-white/20 backdrop-blur-sm rounded-3xl flex items-center justify-center mx-auto mb-6 border-2 border-white/30">
                   <QrCodeIcon className="w-16 h-16 text-emerald-200" />
                 </div>
-                <h4 className="text-lg font-black mb-2 text-center">QR Code Sản Phẩm</h4>
+                <h4 className="text-lg font-bold mb-2 text-center">QR Code Sản Phẩm</h4>
                 <p className="text-xs text-emerald-200 font-bold text-center mb-6">Quét để xem nguồn gốc</p>
-                <button className="w-full py-3 bg-white text-emerald-900 rounded-xl font-black text-sm uppercase tracking-widest shadow-lg hover:bg-emerald-50 transition-all">
+                <button className="w-full py-3 bg-white text-emerald-900 rounded-xl font-bold text-sm uppercase tracking-widest shadow-lg hover:bg-emerald-50 transition-all">
                   Tạo QR Code
                 </button>
               </div>
@@ -178,19 +180,19 @@ const FarmerDashboard = () => {
 
             {/* Quick Stats */}
             <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
-              <h4 className="text-base font-[900] mb-4">Thống Kê Nhanh</h4>
+              <h4 className="text-base font-bold mb-4">Thống Kê Nhanh</h4>
               <div className="space-y-4">
                 <div className="flex justify-between items-center p-4 bg-gray-50 rounded-2xl">
                   <div>
                     <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Tổng diện tích</p>
-                    <p className="text-xl font-black text-gray-900">2.5 ha</p>
+                    <p className="text-xl font-bold text-gray-900">2.5 ha</p>
                   </div>
                   <div className="text-3xl">🌾</div>
                 </div>
                 <div className="flex justify-between items-center p-4 bg-gray-50 rounded-2xl">
                   <div>
                     <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Năng suất ước tính</p>
-                    <p className="text-xl font-black text-gray-900">8.5 tấn/ha</p>
+                    <p className="text-xl font-bold text-gray-900">8.5 tấn/ha</p>
                   </div>
                   <div className="text-3xl">📊</div>
                 </div>
@@ -202,7 +204,7 @@ const FarmerDashboard = () => {
         {/* Recent Orders */}
         <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-            <h3 className="text-xl font-[900] text-gray-900">Đơn Hàng Gần Đây</h3>
+            <h3 className="text-xl font-bold text-gray-900">Đơn Hàng Gần Đây</h3>
             <Link to="/marketplace" className="text-sm font-bold text-emerald-600 hover:underline self-start sm:self-auto">Xem tất cả →</Link>
           </div>
           <div className="overflow-x-auto">
@@ -210,7 +212,7 @@ const FarmerDashboard = () => {
               <thead className="bg-gray-50">
                 <tr>
                   {['Mã đơn', 'Sản phẩm', 'Người mua', 'Giá trị', 'Trạng thái', 'Ngày'].map(h => (
-                    <th key={h} className="px-6 py-4 text-left text-xs font-black text-gray-500 uppercase tracking-wider">
+                    <th key={h} className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
                       {h}
                     </th>
                   ))}
@@ -220,7 +222,7 @@ const FarmerDashboard = () => {
                 {recentOrders.map((order) => (
                   <tr key={order.id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-sm font-black text-gray-900">{order.id}</span>
+                      <span className="text-sm font-bold text-gray-900">{order.id}</span>
                     </td>
                     <td className="px-6 py-4">
                       <span className="text-sm font-bold text-gray-900">{order.product}</span>
@@ -229,7 +231,7 @@ const FarmerDashboard = () => {
                       <span className="text-sm font-medium text-gray-600">{order.buyer}</span>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="text-sm font-black text-emerald-600">{order.amount}</span>
+                      <span className="text-sm font-bold text-emerald-600">{order.amount}</span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className={`px-3 py-1 inline-flex text-xs leading-5 font-bold rounded-full ${
@@ -253,26 +255,26 @@ const FarmerDashboard = () => {
         {/* My Products */}
         <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-            <h3 className="text-xl font-[900] text-gray-900">Sản Phẩm Của Tôi</h3>
-            <button className="px-6 py-3 bg-emerald-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl shadow-emerald-100 hover:scale-105 transition-all flex items-center gap-2">
+            <h3 className="text-xl font-bold text-gray-900">Sản Phẩm Của Tôi</h3>
+            <button className="px-6 py-3 bg-emerald-600 text-white rounded-2xl font-bold text-xs uppercase tracking-widest shadow-xl shadow-emerald-100 hover:scale-105 transition-all flex items-center gap-2">
               <PlusCircleIcon className="w-5 h-5" /> Thêm Sản Phẩm
             </button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {products.map(product => (
-              <div key={product.id} className="bg-gray-50 rounded-[35px] p-6 border border-gray-100 hover:shadow-lg transition-all group">
+              <div key={product.id} className="bg-gray-50 rounded-3xl p-6 border border-gray-100 hover:shadow-lg transition-all duration-200 group">
                 <div className="flex gap-6">
                   <img src={product.image} alt={product.name} className="w-24 h-24 rounded-2xl object-cover border-2 border-white shadow-md group-hover:scale-105 transition-transform" />
                   <div className="flex-1">
-                    <h4 className="text-lg font-black text-gray-900 mb-2">{product.name}</h4>
+                    <h4 className="text-lg font-bold text-gray-900 mb-2">{product.name}</h4>
                     <div className="space-y-2">
                       <div className="flex justify-between items-center">
                         <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Số lượng</span>
-                        <span className="text-sm font-black text-gray-900">{product.quantity.toLocaleString('vi-VN')} kg</span>
+                        <span className="text-sm font-bold text-gray-900">{product.quantity.toLocaleString('vi-VN')} kg</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Giá bán</span>
-                        <span className="text-sm font-black text-emerald-600">{product.price}</span>
+                        <span className="text-sm font-bold text-emerald-600">{product.price}</span>
                       </div>
                       <div className="flex gap-2 pt-2">
                         <button className="flex-1 px-4 py-2 bg-emerald-600 text-white rounded-xl font-bold text-xs hover:bg-emerald-700 transition-all">
