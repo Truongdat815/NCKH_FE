@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { CloudArrowUpIcon } from '@heroicons/react/24/solid'
 import { SparklesIcon } from '@heroicons/react/24/outline'
-import PageTransition from '../../../components/common/PageTransition'
-import LoadingSpinner from '../../../components/common/LoadingSpinner'
+import PageTransition from '@/shared/components/common/PageTransition'
+import LoadingSpinner from '@/shared/components/common/LoadingSpinner'
 
 const AIAnalysisPage = () => {
   const [selectedImage, setSelectedImage] = useState(null)

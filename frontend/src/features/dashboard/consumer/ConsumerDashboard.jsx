@@ -8,7 +8,7 @@ import {
   CurrencyDollarIcon,
   TruckIcon
 } from '@heroicons/react/24/solid'
-import PageTransition from '../../../components/common/PageTransition'
+import PageTransition from '@/shared/components/common/PageTransition'
 
 const ConsumerDashboard = () => {
   const stats = [

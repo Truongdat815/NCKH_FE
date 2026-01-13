@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserIcon, BuildingOfficeIcon, AcademicCapIcon, IdentificationIcon } from '@heroicons/react/24/outline'
-import PageTransition from '../../../components/common/PageTransition'
+import PageTransition from '@/shared/components/common/PageTransition'
 
 const roles = [
   { id: 'farmer', name: 'Nông dân', icon: UserIcon, desc: 'Mua vật tư, bán nông sản' },

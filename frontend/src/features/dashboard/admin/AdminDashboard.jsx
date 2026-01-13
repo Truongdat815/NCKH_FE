@@ -7,9 +7,10 @@ import {
   ArrowTrendingUpIcon,
   MapIcon
 } from '@heroicons/react/24/solid'
-import PageTransition from '../../../components/common/PageTransition'
-import Badge from '../../../components/common/Badge'
-import { useToast } from '../../../hooks/useToast'
+import PageTransition from '@/shared/components/common/PageTransition'
+import Badge from '@/shared/components/common/Badge'
+import { useToast } from '@/shared/hooks/useToast'
+import EpidemicMap from '@/shared/components/ui/EpidemicMap'
 
 const AdminDashboard = () => {
   const { showSuccess, showInfo } = useToast()
@@ -70,20 +71,25 @@ const AdminDashboard = () => {
           <div className="lg:col-span-2 bg-white p-6 rounded-3xl border border-gray-100 shadow-sm space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <h3 className="text-lg font-bold text-gray-900 flex items-center gap-3">
-                <MapIcon className="w-5 h-5 text-emerald-600" /> Bản đồ Dịch tễ (AI Satellite)
+                <div className="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center">
+                  <MapIcon className="w-5 h-5 text-emerald-600" />
+                </div>
+                Bản đồ Dịch tễ (AI Satellite)
               </h3>
-              <Badge color="danger">Cảnh báo: Đạo ôn</Badge>
+              <Badge color="danger" className="text-sm font-bold px-4 py-2">Cảnh báo: Đạo ôn</Badge>
             </div>
-            <div className="aspect-video bg-gray-900 rounded-3xl relative overflow-hidden shadow-lg group hover:shadow-2xl transition-shadow duration-300">
-              <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=1200" className="w-full h-full object-cover opacity-40 grayscale group-hover:opacity-50 transition-opacity duration-300" alt="Map" />
-              <div className="absolute inset-0 flex items-center justify-center bg-emerald-900/30 backdrop-blur-sm group-hover:bg-emerald-900/40 transition-colors duration-300">
-                <div className="text-center space-y-4">
-                  <div className="text-6xl animate-bounce">📍</div>
-                  <p className="text-white font-bold text-xs uppercase tracking-wider">Monitoring Tiền Giang Area...</p>
+            <div className="aspect-video rounded-3xl relative overflow-hidden shadow-2xl group hover:shadow-3xl transition-all duration-300 border-2 border-teal-700/50 bg-gray-100">
+              {/* Real Map Component */}
+              <EpidemicMap />
+              
+              {/* Monitoring Text Overlay */}
+              <div className="absolute top-4 left-4 z-[1000] pointer-events-none">
+                <div className="bg-black/60 backdrop-blur-md px-4 py-2 rounded-xl border border-white/20">
+                  <p className="text-white font-bold text-xs uppercase tracking-[0.2em] drop-shadow-lg">
+                    MONITORING TIỀN GIANG AREA...
+                  </p>
                 </div>
               </div>
-              <div className="absolute top-1/4 left-1/3 w-4 h-4 bg-red-500 rounded-full animate-ping opacity-75 shadow-lg shadow-red-500/50"></div>
-              <div className="absolute bottom-1/3 right-1/4 w-4 h-4 bg-emerald-500 rounded-full animate-ping opacity-75 shadow-lg shadow-emerald-500/50" style={{ animationDelay: '0.5s' }}></div>
             </div>
           </div>
 

@@ -7,7 +7,7 @@ import {
   ShieldCheckIcon,
   HeartIcon
 } from '@heroicons/react/24/outline'
-import PageTransition from '../../../components/common/PageTransition'
+import PageTransition from '@/shared/components/common/PageTransition'
 
 const AboutPage = () => {
   const features = [

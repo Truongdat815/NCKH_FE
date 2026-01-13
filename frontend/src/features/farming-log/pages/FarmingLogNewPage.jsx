@@ -10,10 +10,10 @@ import {
   BugAntIcon,
   SparklesIcon
 } from '@heroicons/react/24/outline'
-import PageTransition from '../../../components/common/PageTransition'
-import Badge from '../../../components/common/Badge'
-import { useToast } from '../../../hooks/useToast'
-import LoadingSpinner from '../../../components/common/LoadingSpinner'
+import PageTransition from '@/shared/components/common/PageTransition'
+import Badge from '@/shared/components/common/Badge'
+import { useToast } from '@/shared/hooks/useToast'
+import LoadingSpinner from '@/shared/components/common/LoadingSpinner'
 
 const FarmingLogNewPage = () => {
   const navigate = useNavigate()

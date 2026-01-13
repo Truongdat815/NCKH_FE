@@ -1,9 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { PaperAirplaneIcon, SparklesIcon, ArrowLeftIcon } from '@heroicons/react/24/solid'
+import { 
+  PaperAirplaneIcon, SparklesIcon, ArrowLeftIcon, ClockIcon, LightBulbIcon, 
+  BookOpenIcon, TrashIcon, XMarkIcon
+} from '@heroicons/react/24/solid'
 import { PaperAirplaneIcon as PaperAirplaneOutline } from '@heroicons/react/24/outline'
-import PageTransition from '../../../components/common/PageTransition'
+import PageTransition from '@/shared/components/common/PageTransition'
 import { searchKnowledge, smartMatch } from '../utils/knowledgeBase'
+import { useToast } from '@/shared/hooks/useToast'
 
 // TODO: Tích hợp API thật cho production
 // Để có AI mạnh như Gemini/ChatGPT, cần tích hợp:
@@ -23,18 +27,60 @@ import { searchKnowledge, smartMatch } from '../utils/knowledgeBase'
 // }
 
 const AIChatPage = () => {
-  const [messages, setMessages] = useState([
-    {
+  const { showSuccess } = useToast()
+  const [messages, setMessages] = useState(() => {
+    // Load from localStorage
+    const saved = localStorage.getItem('ai-chat-history')
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved)
+        if (parsed.length > 0) return parsed
+      } catch (e) {}
+    }
+    return [{
       id: 1,
       role: 'assistant',
       content: 'Xin chào! Tôi là AI Chẩn đoán Cây trồng của AgriSmart. Tôi có thể giúp bạn:\n\n🌾 Chẩn đoán bệnh cây trồng\n🧪 Tư vấn phân bón và thuốc bảo vệ thực vật\n📊 Phân tích điều kiện canh tác\n💡 Đề xuất giải pháp canh tác bền vững\n\nHãy mô tả vấn đề của bạn hoặc đặt câu hỏi, tôi sẽ hỗ trợ ngay!',
-      timestamp: new Date()
-    }
-  ])
+      timestamp: new Date().toISOString()
+    }]
+  })
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const messagesEndRef = useRef(null)
   const inputRef = useRef(null)
+
+  const quickSuggestions = [
+    'Lúa đang vàng lá, bị bệnh gì?',
+    'Cách bón phân NPK cho lúa?',
+    'Thuốc trừ sâu đục thân lúa?',
+    'Cà chua bị héo xanh, xử lý sao?',
+    'Phân bón tốt nhất cho cà chua?',
+    'Cách phòng bệnh đạo ôn lúa?',
+  ]
+
+  // Save messages to localStorage
+  useEffect(() => {
+    localStorage.setItem('ai-chat-history', JSON.stringify(messages))
+  }, [messages])
+
+  const handleClearHistory = () => {
+    if (window.confirm('Bạn có chắc muốn xóa toàn bộ lịch sử chat?')) {
+      const welcomeMsg = [{
+        id: 1,
+        role: 'assistant',
+        content: 'Xin chào! Tôi là AI Chẩn đoán Cây trồng của AgriSmart. Tôi có thể giúp bạn:\n\n🌾 Chẩn đoán bệnh cây trồng\n🧪 Tư vấn phân bón và thuốc bảo vệ thực vật\n📊 Phân tích điều kiện canh tác\n💡 Đề xuất giải pháp canh tác bền vững\n\nHãy mô tả vấn đề của bạn hoặc đặt câu hỏi, tôi sẽ hỗ trợ ngay!',
+        timestamp: new Date().toISOString()
+      }]
+      setMessages(welcomeMsg)
+      localStorage.setItem('ai-chat-history', JSON.stringify(welcomeMsg))
+      showSuccess('Đã xóa lịch sử chat!')
+    }
+  }
+
+  const handleSuggestionClick = (suggestion) => {
+    setInput(suggestion)
+    inputRef.current?.focus()
+  }
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -43,6 +89,12 @@ const AIChatPage = () => {
   useEffect(() => {
     scrollToBottom()
   }, [messages])
+
+  // Convert timestamp string to Date if needed
+  const parseTimestamp = (ts) => {
+    if (typeof ts === 'string') return new Date(ts)
+    return ts
+  }
 
   // Hệ thống câu trả lời AI thông minh - mạnh như Gemini + ChatGPT
   const generateAIResponse = (userMessage) => {
@@ -54,7 +106,7 @@ const AIChatPage = () => {
     if (knowledgeAnswer) {
       return {
         content: knowledgeAnswer,
-        timestamp: new Date()
+        timestamp: new Date().toISOString()
       }
     }
     
@@ -363,22 +415,25 @@ Bạn đang gặp loại sâu bệnh nào?`,
     if (!input.trim() || isLoading) return
 
     const userMessage = {
-      id: messages.length + 1,
+      id: Date.now(),
       role: 'user',
       content: input.trim(),
-      timestamp: new Date()
+      timestamp: new Date().toISOString()
     }
 
     setMessages(prev => [...prev, userMessage])
+    const userInput = input.trim()
     setInput('')
     setIsLoading(true)
 
     // Giả lập delay AI suy nghĩ (tăng tính xác thực)
     setTimeout(() => {
+      const response = generateAIResponse(userInput)
       const aiResponse = {
-        id: messages.length + 2,
+        id: Date.now() + 1,
         role: 'assistant',
-        ...generateAIResponse(input.trim()),
+        ...response,
+        timestamp: new Date().toISOString()
       }
       setMessages(prev => [...prev, aiResponse])
       setIsLoading(false)
@@ -414,6 +469,27 @@ Bạn đang gặp loại sâu bệnh nào?`,
           </div>
         </div>
 
+        {/* Quick Suggestions */}
+        {messages.length <= 1 && (
+          <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-3xl p-6 border border-emerald-100 mb-6">
+            <div className="flex items-center gap-2 mb-4">
+              <LightBulbIcon className="w-5 h-5 text-emerald-600" />
+              <h3 className="font-bold text-gray-900">Câu hỏi gợi ý</h3>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {quickSuggestions.map((suggestion, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => handleSuggestionClick(suggestion)}
+                  className="px-4 py-2 bg-white text-gray-700 rounded-xl hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-300 border border-gray-200 transition-all text-sm font-medium shadow-sm hover:shadow-md"
+                >
+                  {suggestion}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Chat Container */}
         <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden flex flex-col" style={{ height: 'calc(100vh - 200px)', minHeight: '600px' }}>
           {/* Messages Area */}
@@ -439,7 +515,7 @@ Bạn đang gặp loại sâu bệnh nào?`,
                     {message.content}
                   </div>
                   <div className={`text-xs mt-2 ${message.role === 'user' ? 'text-emerald-100' : 'text-gray-400'}`}>
-                    {message.timestamp.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}
+                    {parseTimestamp(message.timestamp).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}
                   </div>
                 </div>
                 {message.role === 'user' && (

@@ -24,14 +24,13 @@ import {
   PencilSquareIcon,
   TrashIcon,
   PhotoIcon,
-  ChartBarIcon,
-  MedalIcon
+  ChartBarIcon
 } from '@heroicons/react/24/outline'
 import { HandThumbUpIcon as HandThumbUpIconSolid, BookmarkIcon as BookmarkIconSolid, HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid'
-import EmptyState from '../../../components/common/EmptyState'
-import { useToast } from '../../../hooks/useToast'
-import PageTransition from '../../../components/common/PageTransition'
-import Modal from '../../../components/common/Modal'
+import EmptyState from '@/shared/components/common/EmptyState'
+import { useToast } from '@/shared/hooks/useToast'
+import PageTransition from '@/shared/components/common/PageTransition'
+import Modal from '@/shared/components/common/Modal'
 
 const CommunityPage = () => {
   const { showSuccess, showError, showInfo } = useToast()

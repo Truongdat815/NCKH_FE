@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { BanknotesIcon, WalletIcon, CreditCardIcon } from '@heroicons/react/24/outline'
-import PageTransition from '../../../components/common/PageTransition'
-import { useToast } from '../../../hooks/useToast'
+import PageTransition from '@/shared/components/common/PageTransition'
+import { useToast } from '@/shared/hooks/useToast'
 
 const CheckoutPage = () => {
   const navigate = useNavigate()
@@ -140,7 +140,7 @@ const CheckoutPage = () => {
                     }`}>
                       {m.label}
                     </span>
-                  </label>
+                </label>
                 )
               })}
             </div>
@@ -153,7 +153,7 @@ const CheckoutPage = () => {
             >
               <span className="relative z-10">Xác nhận đặt hàng ngay</span>
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-700 to-green-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </button>
+          </button>
           </form>
         </div>
       </div>

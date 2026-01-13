@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { CheckCircleIcon, TruckIcon, HomeIcon } from '@heroicons/react/24/solid'
-import PageTransition from '../../../components/common/PageTransition'
+import PageTransition from '@/shared/components/common/PageTransition'
 
 const CheckoutSuccessPage = () => {
   return (

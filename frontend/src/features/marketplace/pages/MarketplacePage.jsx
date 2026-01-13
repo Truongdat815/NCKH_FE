@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import ProductCard from '../../../components/common/ProductCard'
-import EmptyState from '../../../components/common/EmptyState'
+import ProductCard from '@/shared/components/common/ProductCard'
+import EmptyState from '@/shared/components/common/EmptyState'
 import { MagnifyingGlassIcon, AdjustmentsHorizontalIcon, FunnelIcon, XMarkIcon, StarIcon } from '@heroicons/react/24/outline'
 import { StarIcon as StarIconSolid } from '@heroicons/react/24/solid'
-import PageTransition from '../../../components/common/PageTransition'
+import PageTransition from '@/shared/components/common/PageTransition'
 
 const MarketplacePage = () => {
   const [selectedCategory, setSelectedCategory] = useState('Tất cả sản phẩm')

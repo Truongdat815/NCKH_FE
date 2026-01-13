@@ -8,9 +8,9 @@ import {
   StarIcon,
   ShoppingCartIcon
 } from '@heroicons/react/24/solid'
-import PageTransition from '../../../components/common/PageTransition'
-import Badge from '../../../components/common/Badge'
-import { useToast } from '../../../hooks/useToast'
+import PageTransition from '@/shared/components/common/PageTransition'
+import Badge from '@/shared/components/common/Badge'
+import { useToast } from '@/shared/hooks/useToast'
 
 const ProductDetailPage = () => {
   const { id } = useParams()

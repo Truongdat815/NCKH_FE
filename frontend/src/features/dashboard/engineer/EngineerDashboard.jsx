@@ -9,7 +9,7 @@ import {
   UserGroupIcon
 } from '@heroicons/react/24/solid'
 import { QrCodeIcon, CalendarIcon } from '@heroicons/react/24/outline'
-import PageTransition from '../../../components/common/PageTransition'
+import PageTransition from '@/shared/components/common/PageTransition'
 
 const EngineerDashboard = () => {
   const stats = [

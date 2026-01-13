@@ -9,11 +9,11 @@ import {
   XCircleIcon,
   EyeIcon
 } from '@heroicons/react/24/outline'
-import PageTransition from '../../../components/common/PageTransition'
-import Badge from '../../../components/common/Badge'
-import EmptyState from '../../../components/common/EmptyState'
-import { useToast } from '../../../hooks/useToast'
-import Modal from '../../../components/common/Modal'
+import PageTransition from '@/shared/components/common/PageTransition'
+import Badge from '@/shared/components/common/Badge'
+import EmptyState from '@/shared/components/common/EmptyState'
+import { useToast } from '@/shared/hooks/useToast'
+import Modal from '@/shared/components/common/Modal'
 
 const OrdersPage = () => {
   const { showSuccess, showError } = useToast()

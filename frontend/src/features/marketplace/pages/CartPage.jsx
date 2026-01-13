@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { TrashIcon, PlusIcon, MinusIcon } from '@heroicons/react/24/outline'
-import PageTransition from '../../../components/common/PageTransition'
-import EmptyState from '../../../components/common/EmptyState'
-import { useToast } from '../../../hooks/useToast'
+import PageTransition from '@/shared/components/common/PageTransition'
+import EmptyState from '@/shared/components/common/EmptyState'
+import { useToast } from '@/shared/hooks/useToast'
 
 const CartPage = () => {
   const { showSuccess, showError } = useToast()

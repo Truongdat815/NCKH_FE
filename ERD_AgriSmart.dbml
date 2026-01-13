@@ -11,7 +11,7 @@ Table users {
   email varchar(255) [unique, not null, note: 'Email đăng nhập']
   phone varchar(20) [unique, note: 'Số điện thoại']
   password_hash varchar(255) [not null, note: 'Mật khẩu đã mã hóa']
-  role varchar(50) [not null, note: 'Vai trò: nông dân, doanh nghiệp, kỹ sư, người mua, admin']
+  role varchar(50) [not null, note: 'Vai trò: farmer, enterprise, engineer, consumer, admin']
   avatar_url text [note: 'Link ảnh đại diện']
   address text [note: 'Địa chỉ']
   verified boolean [default: false, note: 'Đã xác thực hay chưa']
@@ -57,7 +57,6 @@ Table posts {
   id bigint [pk, increment]
   user_id bigint [ref: > users.id, not null, note: 'ID người đăng']
   content text [not null, note: 'Nội dung bài viết']
-  image_url text [note: 'Link ảnh đính kèm']
   category varchar(100) [note: 'Danh mục: bệnh cây, phân bón, sâu bệnh, kỹ thuật, thị trường, khác']
   likes_count int [default: 0, note: 'Số lượt thích']
   comments_count int [default: 0, note: 'Số bình luận']
@@ -70,6 +69,16 @@ Table posts {
   updated_at timestamp [default: `now()`]
   
   Note: 'Bài viết trong cộng đồng'
+}
+
+Table post_images {
+  id bigint [pk, increment]
+  post_id bigint [ref: > posts.id, not null, note: 'ID bài viết']
+  image_url text [not null, note: 'Link ảnh']
+  display_order int [default: 0, note: 'Thứ tự hiển thị']
+  created_at timestamp [default: `now()`]
+  
+  Note: 'Nhiều ảnh cho mỗi bài viết'
 }
 
 Table post_tags {
@@ -85,6 +94,7 @@ Table comments {
   id bigint [pk, increment]
   post_id bigint [ref: > posts.id, not null, note: 'ID bài viết']
   user_id bigint [ref: > users.id, not null, note: 'ID người bình luận']
+  parent_id bigint [ref: > comments.id, note: 'ID bình luận cha (để reply)']
   content text [not null, note: 'Nội dung bình luận']
   likes_count int [default: 0, note: 'Số lượt thích']
   rewarded_amount decimal(10,2) [default: 0, note: 'Tiền thưởng cho bình luận hay']
@@ -92,7 +102,7 @@ Table comments {
   created_at timestamp [default: `now()`, note: 'Ngày bình luận']
   updated_at timestamp [default: `now()`]
   
-  Note: 'Bình luận trên bài viết'
+  Note: 'Bình luận trên bài viết (có thể reply)'
 }
 
 Table post_likes {
@@ -147,11 +157,23 @@ Table trending_topics {
   id bigint [pk, increment]
   topic_name varchar(255) [unique, not null, note: 'Tên chủ đề']
   post_count int [default: 0, note: 'Số bài viết']
-  trend_direction varchar(10) [note: 'Xu hướng: tăng, giảm']
+  trend_direction varchar(10) [note: 'Xu hướng: up, down']
   created_at timestamp [default: `now()`]
   updated_at timestamp [default: `now()`]
   
   Note: 'Chủ đề đang hot'
+}
+
+Table post_trending_topics {
+  id bigint [pk, increment]
+  post_id bigint [ref: > posts.id, not null, note: 'ID bài viết']
+  topic_id bigint [ref: > trending_topics.id, not null, note: 'ID chủ đề']
+  created_at timestamp [default: `now()`]
+  
+  Note: 'Bài viết thuộc chủ đề nào'
+  indexes {
+    (post_id, topic_id) [unique]
+  }
 }
 
 // ============================================
@@ -176,11 +198,10 @@ Table products {
   name varchar(255) [not null, note: 'Tên sản phẩm']
   description text [note: 'Mô tả sản phẩm']
   price decimal(12,2) [not null, note: 'Giá bán']
-  image_url text [note: 'Link ảnh chính']
   stock_quantity int [default: 0, note: 'Số lượng tồn kho']
   rating_avg decimal(3,2) [default: 0, note: 'Điểm đánh giá trung bình']
   review_count int [default: 0, note: 'Số lượt đánh giá']
-  status varchar(50) [default: 'active', note: 'Trạng thái: bán, ngưng, hết hàng']
+  status varchar(50) [default: 'active', note: 'Trạng thái: active, inactive, sold_out']
   created_at timestamp [default: `now()`, note: 'Ngày tạo']
   updated_at timestamp [default: `now()`]
   
@@ -232,12 +253,13 @@ Table orders {
   buyer_id bigint [ref: > users.id, not null, note: 'ID người mua']
   seller_id bigint [ref: > users.id, not null, note: 'ID người bán']
   total_amount decimal(12,2) [not null, note: 'Tổng tiền']
-  status varchar(50) [default: 'pending', note: 'Trạng thái: chờ xác nhận, đang giao, hoàn thành, hủy']
+  shipping_fee decimal(12,2) [default: 0, note: 'Phí vận chuyển']
+  status varchar(50) [default: 'pending', note: 'Trạng thái: pending, shipping, completed, cancelled']
   shipping_address text [not null, note: 'Địa chỉ giao hàng']
   shipping_phone varchar(20) [not null, note: 'Số điện thoại người nhận']
   shipping_name varchar(255) [not null, note: 'Tên người nhận']
-  payment_method varchar(50) [note: 'Cách thanh toán: COD, chuyển khoản, ví điện tử']
-  payment_status varchar(50) [default: 'pending', note: 'Trạng thái thanh toán: chờ, đã trả, lỗi']
+  payment_method varchar(50) [note: 'Cách thanh toán: cod, bank_transfer, e_wallet']
+  payment_status varchar(50) [default: 'pending', note: 'Trạng thái thanh toán: pending, paid, failed']
   created_at timestamp [default: `now()`, note: 'Ngày đặt hàng']
   updated_at timestamp [default: `now()`]
   
@@ -280,7 +302,9 @@ Table seasons {
   crop varchar(255) [not null, note: 'Loại cây trồng']
   start_date date [not null, note: 'Ngày bắt đầu']
   end_date date [note: 'Ngày kết thúc']
-  status varchar(50) [default: 'active', note: 'Trạng thái: đang trồng, đã xong, hủy']
+  location varchar(255) [note: 'Vị trí']
+  area varchar(100) [note: 'Diện tích']
+  status varchar(50) [default: 'active', note: 'Trạng thái: active, completed, cancelled']
   created_at timestamp [default: `now()`, note: 'Ngày tạo']
   updated_at timestamp [default: `now()`]
   
@@ -292,7 +316,7 @@ Table farming_activities {
   season_id bigint [ref: > seasons.id, note: 'ID vụ mùa']
   user_id bigint [ref: > users.id, not null, note: 'ID nông dân']
   activity_name varchar(255) [not null, note: 'Tên hoạt động']
-  activity_type varchar(50) [not null, note: 'Loại: bón phân, tưới nước, phun thuốc, thu hoạch, khác']
+  activity_type varchar(50) [not null, note: 'Loại: fertilizer, water, pest, harvest, other']
   activity_date date [not null, note: 'Ngày thực hiện']
   location varchar(255) [note: 'Vị trí']
   details text [note: 'Chi tiết']
@@ -316,7 +340,7 @@ Table farming_stats {
   id bigint [pk, increment]
   season_id bigint [ref: > seasons.id, note: 'ID vụ mùa']
   user_id bigint [ref: > users.id, not null, note: 'ID nông dân']
-  stat_type varchar(50) [not null, note: 'Loại thống kê: độ ẩm đất, nhiệt độ, mức độ dịch bệnh']
+  stat_type varchar(50) [not null, note: 'Loại thống kê: soil_moisture, temperature, disease_level']
   stat_value varchar(100) [not null, note: 'Giá trị']
   measured_at timestamp [default: `now()`, note: 'Thời điểm đo']
   
@@ -340,7 +364,7 @@ Table ai_chat_sessions {
 Table ai_chat_messages {
   id bigint [pk, increment]
   session_id bigint [ref: > ai_chat_sessions.id, not null, note: 'ID phiên chat']
-  role varchar(20) [not null, note: 'Vai trò: người dùng hoặc AI']
+  role varchar(20) [not null, note: 'Vai trò: user, assistant']
   message_content text [not null, note: 'Nội dung tin nhắn']
   created_at timestamp [default: `now()`, note: 'Thời gian gửi']
   

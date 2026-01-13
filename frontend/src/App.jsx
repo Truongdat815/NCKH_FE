@@ -1,6 +1,7 @@
 import { Outlet, Link, useLocation } from 'react-router-dom'
 import { useEffect, useRef } from 'react'
 import Navbar from './components/layout/Navbar'
+import AdminNavbar from './components/layout/AdminNavbar'
 
 function App() {
   const location = useLocation()
@@ -15,13 +16,16 @@ function App() {
     }
   }, [location.pathname])
 
+  // Check if we're in admin/dashboard routes
+  const isAdminRoute = location.pathname.startsWith('/dashboard')
+  
   return (
     <div className="min-h-screen bg-[#f8fafc] flex flex-col">
-      {/* Navbar luôn nằm trên cùng */}
-      <Navbar />
+      {/* Conditional Navbar - AdminNavbar for dashboard, regular Navbar for others */}
+      {isAdminRoute ? <AdminNavbar /> : <Navbar />}
       
       {/* Main content - padding top để tránh navbar */}
-      <main ref={mainRef} className="pt-20 flex-grow w-full relative">
+      <main ref={mainRef} className={isAdminRoute ? "pt-20 flex-grow w-full relative" : "pt-20 flex-grow w-full relative"}>
         <div 
           key={location.pathname}
           className="page-wrapper"

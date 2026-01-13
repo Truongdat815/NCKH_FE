@@ -9,9 +9,9 @@ import {
   PencilIcon,
   ShieldCheckIcon
 } from '@heroicons/react/24/outline'
-import PageTransition from '../../../components/common/PageTransition'
-import Badge from '../../../components/common/Badge'
-import { useToast } from '../../../hooks/useToast'
+import PageTransition from '@/shared/components/common/PageTransition'
+import Badge from '@/shared/components/common/Badge'
+import { useToast } from '@/shared/hooks/useToast'
 
 const ProfilePage = () => {
   const { showSuccess, showError, showInfo } = useToast()
