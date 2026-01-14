@@ -48,6 +48,9 @@ const AIChatPage = () => {
   const [isLoading, setIsLoading] = useState(false)
   const messagesEndRef = useRef(null)
   const inputRef = useRef(null)
+  const messagesContainerRef = useRef(null)
+  const shouldAutoScrollRef = useRef(false) // Không auto-scroll mặc định
+  const isInitialMountRef = useRef(true)
 
   const quickSuggestions = [
     'Lúa đang vàng lá, bị bệnh gì?',
@@ -79,16 +82,74 @@ const AIChatPage = () => {
 
   const handleSuggestionClick = (suggestion) => {
     setInput(suggestion)
-    inputRef.current?.focus()
+    // Không auto-scroll khi click suggestion
+    shouldAutoScrollRef.current = false
+    setTimeout(() => {
+      inputRef.current?.focus()
+    }, 0)
   }
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  const scrollToBottom = (force = false) => {
+    // Không scroll nếu đang ở lần mount đầu tiên
+    if (isInitialMountRef.current && !force) return
+    
+    if (!messagesContainerRef.current) return
+    
+    const container = messagesContainerRef.current
+    const isNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 200
+    
+    // Chỉ scroll nếu:
+    // 1. Force = true (khi có message mới)
+    // 2. User đang ở gần cuối VÀ shouldAutoScroll = true
+    if (force || (shouldAutoScrollRef.current && isNearBottom)) {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }
   }
 
+  // Đảm bảo scroll ở trên cùng khi mount lần đầu
   useEffect(() => {
-    scrollToBottom()
-  }, [messages])
+    if (messagesContainerRef.current && isInitialMountRef.current) {
+      // Scroll lên trên cùng khi mount
+      messagesContainerRef.current.scrollTop = 0
+    }
+  }, [])
+
+  // Đánh dấu đã mount xong
+  useEffect(() => {
+    // Sau khi mount, đánh dấu không còn là initial mount
+    const timer = setTimeout(() => {
+      isInitialMountRef.current = false
+    }, 1000)
+    return () => clearTimeout(timer)
+  }, [])
+
+  // Chỉ scroll khi có message mới được thêm vào (không phải khi mount)
+  useEffect(() => {
+    // Bỏ qua lần render đầu tiên
+    if (isInitialMountRef.current) return
+    
+    // Chỉ scroll khi có message mới (so sánh với length trước đó)
+    if (messages.length > 0) {
+      // Chỉ scroll nếu user đang ở gần cuối
+      setTimeout(() => {
+        scrollToBottom(true)
+      }, 100)
+    }
+  }, [messages.length])
+
+  // Theo dõi scroll để biết user có đang scroll không
+  useEffect(() => {
+    const container = messagesContainerRef.current
+    if (!container) return
+
+    const handleScroll = () => {
+      const isNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 200
+      shouldAutoScrollRef.current = isNearBottom
+    }
+
+    container.addEventListener('scroll', handleScroll)
+    return () => container.removeEventListener('scroll', handleScroll)
+  }, [])
 
   // Convert timestamp string to Date if needed
   const parseTimestamp = (ts) => {
@@ -437,7 +498,12 @@ Bạn đang gặp loại sâu bệnh nào?`,
       }
       setMessages(prev => [...prev, aiResponse])
       setIsLoading(false)
-      inputRef.current?.focus()
+      // Bật lại auto-scroll khi có response mới
+      shouldAutoScrollRef.current = true
+      setTimeout(() => {
+        scrollToBottom(true)
+        inputRef.current?.focus()
+      }, 100)
     }, 1500 + Math.random() * 1000) // Delay 1.5-2.5 giây
   }
 
@@ -450,50 +516,70 @@ Bạn đang gặp loại sâu bệnh nào?`,
 
   return (
     <PageTransition>
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="flex items-center gap-4 mb-6">
-          <Link to="/community" className="p-3 bg-white rounded-xl hover:bg-gray-50 transition-colors shadow-sm">
-            <ArrowLeftIcon className="w-6 h-6 text-gray-600" />
-          </Link>
-          <div className="flex-1">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center text-2xl shadow-lg">
-                🤖
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">AI Chẩn đoán Cây trồng</h1>
-                <p className="text-sm text-gray-500 font-medium">Hỗ trợ 24/7 • Phản hồi nhanh</p>
+      <div className="h-[calc(100vh-5rem)] flex flex-col overflow-hidden bg-gray-50">
+        <div className="max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 flex flex-col flex-1 min-h-0 py-4">
+          {/* Header - Fixed */}
+          <div className="flex items-center gap-4 mb-4 flex-shrink-0">
+            <Link to="/community" className="p-3 bg-white rounded-xl hover:bg-gray-50 transition-colors shadow-sm">
+              <ArrowLeftIcon className="w-6 h-6 text-gray-600" />
+            </Link>
+            <div className="flex-1">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center text-2xl shadow-lg">
+                  🤖
+                </div>
+                <div>
+                  <h1 className="text-2xl font-bold text-gray-900">AI Chẩn đoán Cây trồng</h1>
+                  <p className="text-sm text-gray-500 font-medium">Hỗ trợ 24/7 • Phản hồi nhanh</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Quick Suggestions */}
-        {messages.length <= 1 && (
-          <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-3xl p-6 border border-emerald-100 mb-6">
-            <div className="flex items-center gap-2 mb-4">
-              <LightBulbIcon className="w-5 h-5 text-emerald-600" />
-              <h3 className="font-bold text-gray-900">Câu hỏi gợi ý</h3>
+          {/* Quick Suggestions - Fixed, chỉ hiện khi ít messages */}
+          {messages.length <= 1 && (
+            <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-3xl p-4 border border-emerald-100 mb-4 flex-shrink-0">
+              <div className="flex items-center gap-2 mb-3">
+                <LightBulbIcon className="w-5 h-5 text-emerald-600" />
+                <h3 className="font-bold text-gray-900 text-sm">Câu hỏi gợi ý</h3>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {quickSuggestions.map((suggestion, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => handleSuggestionClick(suggestion)}
+                    className="px-3 py-1.5 bg-white text-gray-700 rounded-lg hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-300 border border-gray-200 transition-all text-xs font-medium shadow-sm hover:shadow-md"
+                  >
+                    {suggestion}
+                  </button>
+                ))}
+              </div>
             </div>
-            <div className="flex flex-wrap gap-2">
-              {quickSuggestions.map((suggestion, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => handleSuggestionClick(suggestion)}
-                  className="px-4 py-2 bg-white text-gray-700 rounded-xl hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-300 border border-gray-200 transition-all text-sm font-medium shadow-sm hover:shadow-md"
-                >
-                  {suggestion}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+          )}
 
-        {/* Chat Container */}
-        <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden flex flex-col" style={{ height: 'calc(100vh - 200px)', minHeight: '600px' }}>
-          {/* Messages Area */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-gradient-to-b from-gray-50 to-white">
+          {/* Chat Container - Flex grow để chiếm không gian còn lại */}
+          <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden flex flex-col flex-1 min-h-0">
+          {/* Messages Area - Scrollable */}
+          <div 
+            ref={(el) => {
+              messagesContainerRef.current = el
+              // Đảm bảo scroll ở trên cùng khi mount
+              if (el && isInitialMountRef.current) {
+                setTimeout(() => {
+                  el.scrollTop = 0
+                }, 0)
+              }
+            }}
+            className="flex-1 overflow-y-auto p-6 space-y-6 bg-gradient-to-b from-gray-50 to-white min-h-0"
+            onScroll={() => {
+              // Cập nhật shouldAutoScroll khi user scroll
+              if (messagesContainerRef.current) {
+                const container = messagesContainerRef.current
+                const isNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 200
+                shouldAutoScrollRef.current = isNearBottom
+              }
+            }}
+          >
             {messages.map((message) => (
               <div
                 key={message.id}
@@ -543,8 +629,8 @@ Bạn đang gặp loại sâu bệnh nào?`,
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input Area */}
-          <div className="border-t border-gray-100 p-6 bg-white">
+          {/* Input Area - Fixed */}
+          <div className="border-t border-gray-100 p-4 sm:p-6 bg-white flex-shrink-0">
             <div className="flex gap-4 items-end">
               <div className="flex-1 relative">
                 <textarea
@@ -552,6 +638,27 @@ Bạn đang gặp loại sâu bệnh nào?`,
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyPress={handleKeyPress}
+                  onFocus={(e) => {
+                    // Không auto-scroll khi focus vào input
+                    shouldAutoScrollRef.current = false
+                    // Ngăn scroll khi focus
+                    e.preventDefault()
+                    // Giữ nguyên vị trí scroll hiện tại
+                    if (messagesContainerRef.current) {
+                      const container = messagesContainerRef.current
+                      const currentScroll = container.scrollTop
+                      // Đảm bảo không scroll
+                      setTimeout(() => {
+                        if (container.scrollTop !== currentScroll) {
+                          container.scrollTop = currentScroll
+                        }
+                      }, 0)
+                    }
+                  }}
+                  onClick={(e) => {
+                    // Ngăn scroll khi click vào input
+                    shouldAutoScrollRef.current = false
+                  }}
                   placeholder="Nhập câu hỏi của bạn về bệnh cây trồng, phân bón, thuốc bảo vệ thực vật..."
                   className="w-full px-5 py-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-emerald-500 resize-none outline-none text-sm font-medium"
                   rows="2"
@@ -575,6 +682,7 @@ Bạn đang gặp loại sâu bệnh nào?`,
                 <span className="font-medium">AI được đào tạo trên dữ liệu nông nghiệp Việt Nam</span>
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>

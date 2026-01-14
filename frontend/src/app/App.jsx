@@ -2,6 +2,7 @@ import { Outlet, Link, useLocation } from 'react-router-dom'
 import { useEffect, useRef } from 'react'
 import Navbar from '../shared/components/layout/Navbar'
 import AdminNavbar from '../shared/components/layout/AdminNavbar'
+import Logo from '../shared/components/common/Logo'
 
 function App() {
   const location = useLocation()
@@ -18,6 +19,8 @@ function App() {
 
   // Check if we're in admin/dashboard routes
   const isAdminRoute = location.pathname.startsWith('/dashboard')
+  // Check if we're in AI chat page - hide footer to prevent scrolling
+  const isAIChatPage = location.pathname === '/ai-chat'
   
   return (
     <div className="min-h-screen bg-[#f8fafc] flex flex-col">
@@ -39,24 +42,13 @@ function App() {
         </div>
       </main>
       
+      {!isAIChatPage && (
       <footer className="bg-white border-t border-gray-100 mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div className="col-span-1 md:col-span-2">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl flex items-center justify-center shadow-sm">
-                  <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M12 2L8 6L10 8L12 6L14 8L16 6L12 2Z" fill="currentColor" opacity="0.9"/>
-                    <path d="M12 6L8 10L10 12L12 10L14 12L16 10L12 6Z" fill="currentColor" opacity="0.8"/>
-                    <path d="M12 10L8 14L10 16L12 14L14 16L16 14L12 10Z" fill="currentColor" opacity="0.7"/>
-                    <line x1="12" y1="16" x2="12" y2="22" stroke="currentColor" strokeWidth="2.5"/>
-                    <path d="M12 18L9 20L10 22L12 20L14 22L15 20L12 18Z" fill="currentColor" opacity="0.6"/>
-                  </svg>
-                </div>
-                <div>
-                  <div className="text-lg font-bold text-gray-900">AgriSmart</div>
-                  <div className="text-xs font-bold text-emerald-600 uppercase tracking-wider">Smart Agriculture</div>
-                </div>
+              <div className="mb-4">
+                <Logo size="sm" showText={true} variant="default" />
               </div>
               <p className="text-sm text-gray-500 leading-relaxed max-w-md">
                 Hệ sinh thái số toàn diện cho nông nghiệp Việt Nam hiện đại, kết nối nông dân, doanh nghiệp và người tiêu dùng.
@@ -105,6 +97,7 @@ function App() {
           </div>
         </div>
       </footer>
+      )}
     </div>
   )
 }

@@ -11,6 +11,7 @@ import {
   ShoppingCartIcon,
   UserIcon
 } from '@heroicons/react/24/outline'
+import Logo from '../common/Logo'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -31,24 +32,8 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group" aria-label="AgriSmart - Trang chủ">
-            <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl flex items-center justify-center shadow-md shadow-emerald-200/50 group-hover:shadow-lg group-hover:scale-105 transition-all duration-300 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/20 to-transparent"></div>
-              <svg className="w-7 h-7 text-white relative z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                {/* Bông lúa */}
-                <path d="M12 2L8 6L10 8L12 6L14 8L16 6L12 2Z" fill="currentColor" opacity="0.9"/>
-                <path d="M12 6L8 10L10 12L12 10L14 12L16 10L12 6Z" fill="currentColor" opacity="0.8"/>
-                <path d="M12 10L8 14L10 16L12 14L14 16L16 14L12 10Z" fill="currentColor" opacity="0.7"/>
-                {/* Thân lúa */}
-                <line x1="12" y1="16" x2="12" y2="22" stroke="currentColor" strokeWidth="2.5"/>
-                {/* Lá */}
-                <path d="M12 18L9 20L10 22L12 20L14 22L15 20L12 18Z" fill="currentColor" opacity="0.6"/>
-              </svg>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-xl font-bold text-gray-900 leading-none tracking-tight group-hover:text-emerald-600 transition-colors duration-200">AgriSmart</span>
-              <span className="text-[10px] font-semibold text-emerald-600 uppercase tracking-wider mt-0.5">Smart Agriculture</span>
-            </div>
+          <Link to="/" className="group" aria-label="AgriSmart - Trang chủ">
+            <Logo size="md" showText={true} variant="default" />
           </Link>
 
           {/* Desktop Nav */}
