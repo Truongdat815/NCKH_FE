@@ -4,7 +4,7 @@ import { RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
 import ErrorBoundary from '../shared/components/common/ErrorBoundary';
-import '../index.css';
+import '../styles/index.css';
 import router from './router';
 import store from './store';
 

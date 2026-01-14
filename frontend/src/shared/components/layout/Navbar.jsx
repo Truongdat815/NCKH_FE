@@ -20,7 +20,7 @@ const Navbar = () => {
     { name: 'Thị Trường', href: '/marketplace', icon: ShoppingBagIcon },
     { name: 'Cộng Đồng', href: '/community', icon: UserGroupIcon },
     { name: 'Nhật Ký Số', href: '/farming-log', icon: BookOpenIcon },
-    { name: 'Thống Kê', href: '/dashboard', icon: ChartBarIcon },
+    { name: 'Thống Kê', href: '/statistics', icon: ChartBarIcon },
     { name: 'Bác Sỹ AI', href: '/ai-chat', icon: SparklesIcon },
   ]
 

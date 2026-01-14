@@ -2,12 +2,13 @@ import React, { useState } from 'react'
 import { 
   PlusIcon, 
   PencilSquareIcon, 
-  TrashIcon, 
   MagnifyingGlassIcon,
   FunnelIcon,
   UserPlusIcon,
   ShieldCheckIcon,
-  UserIcon
+  UserIcon,
+  CheckCircleIcon,
+  XCircleIcon
 } from '@heroicons/react/24/outline'
 import { useToast } from '@/shared/hooks/useToast'
 import Modal from '@/shared/components/common/Modal'
@@ -61,12 +62,6 @@ const UsersManagement = () => {
     return matchesSearch && matchesRole
   })
 
-  const handleDelete = (id) => {
-    if (window.confirm('Bạn có chắc muốn xóa người dùng này?')) {
-      setUsers(users.filter(u => u.id !== id))
-      showSuccess('Đã xóa người dùng thành công!')
-    }
-  }
 
   const handleEdit = (user) => {
     setEditingUser(user)
@@ -182,51 +177,52 @@ const UsersManagement = () => {
                   <td className="px-6 py-4">
                     <span className="text-sm text-gray-600">{user.phone}</span>
                   </td>
-                  <td className="px-6 py-4">
-                    <span className={`px-3 py-1 text-xs font-bold rounded-full ${roleColors[user.role]}`}>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className={`px-3 py-1 text-xs font-bold rounded-full whitespace-nowrap ${roleColors[user.role]}`}>
                       {roleLabels[user.role]}
                     </span>
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="px-6 py-4 whitespace-nowrap">
                     {user.verified ? (
                       <Badge color="success">
-                        <ShieldCheckIcon className="w-4 h-4 inline mr-1" />
-                        Đã xác thực
+                        <ShieldCheckIcon className="w-3.5 h-3.5" />
+                        <span>Đã xác thực</span>
                       </Badge>
                     ) : (
                       <Badge color="warning">Chưa xác thực</Badge>
                     )}
                   </td>
-                  <td className="px-6 py-4">
-                    <button
-                      onClick={() => toggleUserStatus(user.id)}
-                      className={`px-3 py-1 text-xs font-bold rounded-full transition-colors ${
-                        user.status === 'active' 
-                          ? 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200' 
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                      }`}
-                    >
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <Badge color={user.status === 'active' ? 'success' : 'danger'}>
                       {user.status === 'active' ? 'Hoạt động' : 'Vô hiệu hóa'}
-                    </button>
+                    </Badge>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className="text-sm text-gray-500">{user.createdAt}</span>
                   </td>
                   <td className="px-6 py-4">
-                    <div className="flex gap-2">
+                    <div className="flex items-center gap-2">
                       <button
                         onClick={() => handleEdit(user)}
-                        className="p-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-colors"
-                        title="Sửa"
+                        className="p-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-all duration-200 hover:scale-110 active:scale-95"
+                        title="Chỉnh sửa"
                       >
                         <PencilSquareIcon className="w-5 h-5" />
                       </button>
                       <button
-                        onClick={() => handleDelete(user.id)}
-                        className="p-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-600 hover:text-white transition-colors"
-                        title="Xóa"
+                        onClick={() => toggleUserStatus(user.id)}
+                        className={`p-2 rounded-lg transition-all duration-200 hover:scale-110 active:scale-95 ${
+                          user.status === 'active'
+                            ? 'bg-emerald-50 text-emerald-600 hover:bg-emerald-600 hover:text-white'
+                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                        }`}
+                        title={user.status === 'active' ? 'Vô hiệu hóa' : 'Kích hoạt'}
                       >
-                        <TrashIcon className="w-5 h-5" />
+                        {user.status === 'active' ? (
+                          <XCircleIcon className="w-5 h-5" />
+                        ) : (
+                          <CheckCircleIcon className="w-5 h-5" />
+                        )}
                       </button>
                     </div>
                   </td>

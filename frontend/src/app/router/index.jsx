@@ -34,6 +34,7 @@ const FarmingLogNewPage = lazy(() => import('@/features/farming-log/pages/Farmin
 const CheckoutSuccessPage = lazy(() => import('@/features/marketplace/pages/CheckoutSuccessPage'))
 const ProfilePage = lazy(() => import('@/features/profile/pages/ProfilePage'))
 const AboutPage = lazy(() => import('@/features/about/pages/AboutPage'))
+const StatisticsPage = lazy(() => import('@/features/statistics/pages/StatisticsPage'))
 
 // Wrapper component for Suspense
 const LazyWrapper = ({ children }) => (
@@ -122,6 +123,7 @@ const router = createBrowserRouter([
       { path: 'farming-log/new', element: <LazyWrapper><FarmingLogNewPage /></LazyWrapper> },
       { path: 'profile', element: <LazyWrapper><ProfilePage /></LazyWrapper> },
       { path: 'about', element: <LazyWrapper><AboutPage /></LazyWrapper> },
+      { path: 'statistics', element: <LazyWrapper><StatisticsPage /></LazyWrapper> },
       { path: 'ai-diagnosis', element: <LazyWrapper><AIAnalysisPage /></LazyWrapper> },
       { path: 'ai-chat', element: <LazyWrapper><AIChatPage /></LazyWrapper> },
     ],

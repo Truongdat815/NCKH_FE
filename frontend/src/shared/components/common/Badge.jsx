@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Badge = ({ children, color = 'primary', size = 'md' }) => {
+const Badge = ({ children, color = 'primary', size = 'md', className = '' }) => {
   const colors = {
     primary: 'bg-emerald-50 text-emerald-700 border-emerald-200',
     secondary: 'bg-blue-50 text-blue-700 border-blue-200',
@@ -18,7 +18,7 @@ const Badge = ({ children, color = 'primary', size = 'md' }) => {
   }
   
   return (
-    <span className={`inline-flex items-center gap-1 font-bold border ${colors[color]} ${sizes[size]} transition-all duration-200`}>
+    <span className={`inline-flex items-center gap-1 font-bold border whitespace-nowrap ${colors[color]} ${sizes[size]} transition-all duration-200 ${className}`}>
       {children}
     </span>
   )
